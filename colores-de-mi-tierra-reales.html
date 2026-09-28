@@ -1,0 +1,906 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Colores reales de mi tierra</title>
+<meta name="description" content="The seven colors of the 1991 Harris Paints ad, measured from photos of the real things they are named after, with the ad's own values as alternates.">
+<style>
+:root {
+  --bg: #f6f4f1;
+  --panel: #ffffff;
+  --text: #1c1b1a;
+  --muted: #6b6661;
+  --line: #e4e0da;
+  --code-bg: #f1eee9;
+  --code-hover: #e6e1d9;
+  --ok: #2f7a45;
+  --warn: #a4471a;
+  --edge: #8a6400;
+  --accent: #1c1b1a;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161514;
+    --panel: #201f1d;
+    --text: #efebe6;
+    --muted: #a39d96;
+    --line: #34312e;
+    --code-bg: #2a2825;
+    --code-hover: #37342f;
+    --ok: #7cc493;
+    --warn: #f0a37a;
+    --edge: #e0b64a;
+    --accent: #efebe6;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161514;
+  --panel: #201f1d;
+  --text: #efebe6;
+  --muted: #a39d96;
+  --line: #34312e;
+  --code-bg: #2a2825;
+  --code-hover: #37342f;
+  --ok: #7cc493;
+  --warn: #f0a37a;
+  --edge: #e0b64a;
+  --accent: #efebe6;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+code, .code, .swatch-hex, .shades span, dd {
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+.wrap { max-width: 1180px; margin: 0 auto; padding: 40px 16px 64px; }
+header h1 {
+  font-size: clamp(30px, 5vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px;
+}
+header p { margin: 0; color: var(--muted); max-width: 62ch; }
+.palette {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0;
+  margin: 28px 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.chip {
+  aspect-ratio: 1;
+  background: var(--c);
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+  text-decoration: none;
+  min-width: 0;
+}
+.chip span {
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(255,255,255,0.88);
+  color: #1c1b1a;
+  padding: 2px 7px;
+  border-radius: 99px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+section.explain {
+  margin: 36px 0 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.explain h2 {
+  grid-column: 1 / -1;
+  font-size: 20px;
+  margin: 0 0 4px;
+}
+.tierbox {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.tierbox h3 { font-size: 15px; margin: 0 0 6px; display: flex; gap: 8px; align-items: center; }
+.tierbox p { margin: 0; color: var(--muted); font-size: 14px; }
+.rank {
+  display: inline-grid;
+  place-items: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+  flex: none;
+  margin-right: 8px;
+}
+.tierbox .rank { margin-right: 0; }
+.caveat {
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--warn);
+  background: var(--panel);
+  border-radius: 0 8px 8px 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+.cards {
+  margin-top: 36px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 540px), 1fr));
+  gap: 20px;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 18px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  align-items: start;
+  align-content: start;
+  --frame-w: 300px;
+  grid-template-areas:
+    "sw info"
+    "codes codes"
+    "bottom bottom"
+    "ref ref";
+  gap: 16px 18px;
+  scroll-margin-top: 16px;
+}
+.swatch {
+  grid-area: sw;
+  aspect-ratio: 1;
+  background: var(--c);
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08);
+  display: flex;
+  align-items: flex-end;
+  padding: 10px;
+}
+.swatch-hex { color: var(--ink); font-size: 14px; font-weight: 600; opacity: 0.9; }
+.info { grid-area: info; min-width: 0; display: flex; flex-direction: column; }
+.info h2 { margin: 0; font-size: 22px; letter-spacing: -0.01em; }
+.sub { margin: 2px 0 14px; color: var(--muted); font-size: 13px; }
+.sub code { font-size: 12px; }
+.shades {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  height: 54px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: auto;
+}
+.shades div { background: var(--c); display: flex; align-items: flex-end; padding: 4px 6px; }
+.shades span { font-size: 10px; color: var(--ink); opacity: 0.85; }
+.shade-cap {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr 1fr;
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+.shade-cap span:nth-child(2) { text-align: center; }
+.shade-cap span:nth-child(3) { text-align: right; }
+table.codes { grid-area: codes; width: 100%; border-collapse: collapse; font-size: 14px; }
+.codes th[scope="row"] {
+  text-align: left;
+  font-weight: 500;
+  color: var(--muted);
+  padding: 3px 10px 3px 0;
+  white-space: nowrap;
+  width: 1%;
+}
+.codes td { padding: 3px 0; }
+.codes td.note { font-size: 12px; color: var(--muted); padding-left: 10px; text-align: right; line-height: 1.3; }
+.codes tr.tier th {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  padding: 12px 0 4px;
+  border-bottom: 1px solid var(--line);
+}
+.codes tbody:first-child tr.tier th { padding-top: 0; }
+.codes tr.tier .rank { width: 18px; height: 18px; font-size: 11px; vertical-align: 1px; }
+.codes tbody tr:nth-child(2) th, .codes tbody tr:nth-child(2) td { padding-top: 7px; }
+.code {
+  font-size: 13.5px;
+  background: var(--code-bg);
+  color: var(--text);
+  border: 0;
+  border-radius: 6px;
+  padding: 3px 8px;
+  cursor: pointer;
+  text-align: left;
+  white-space: nowrap;
+}
+.code:hover { background: var(--code-hover); }
+.code:focus-visible, .toggle:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.code.copied::after { content: "  copied"; color: var(--ok); font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 12px; }
+.t1 .code { font-weight: 700; }
+.ok { color: var(--ok); }
+.warn { color: var(--warn); }
+.ref {
+  grid-area: ref;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  min-width: 0;
+}
+.ref h3 { margin: 0 0 12px; font-size: 17px; }
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.cmp { display: flex; gap: 10px; align-items: center; min-width: 0; }
+.cmp .sq { width: 72px; height: 72px; border-radius: 8px; background: var(--c); flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+.cmp span { display: block; font-size: 12px; color: var(--muted); }
+.cmp code { display: block; font-size: 15px; font-weight: 700; }
+.cmp small { display: block; font-size: 11px; color: var(--muted); }
+.ref-note { font-size: 13px; color: var(--muted); margin: 6px 0 14px; }
+.def { font-size: 13px; color: var(--muted); margin: -6px 0 12px; }
+.verdict { margin: 12px 0 0; font-size: 13px; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+.strength { color: var(--muted); }
+.badge { display: inline-block; font-size: 12px; font-weight: 700; padding: 2px 9px; border-radius: 99px; white-space: nowrap; }
+.v-ok { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+.v-edge { background: color-mix(in srgb, #b58400 18%, transparent); color: var(--edge); }
+.v-shift { background: color-mix(in srgb, var(--warn) 16%, transparent); color: var(--warn); }
+.v-few { background: var(--code-bg); color: var(--muted); }
+section.summary { margin: 36px 0 0; }
+.summary h2, .lean h2 { font-size: 20px; margin: 0 0 10px; }
+.table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+table.sum { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 760px; }
+.sum th, .sum td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.sum thead th { font-size: 12px; color: var(--muted); font-weight: 600; }
+.sum tbody tr:last-child th, .sum tbody tr:last-child td { border-bottom: 0; }
+.sum th a { color: var(--text); font-weight: 600; text-decoration: none; }
+.sum small { color: var(--muted); }
+.sum .weak { margin-left: 6px; }
+.mini { display: inline-block; width: 14px; height: 14px; border-radius: 4px; background: var(--c); vertical-align: -2px; margin-right: 6px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.1); }
+.sum-note { font-size: 13px; color: var(--muted); margin: 10px 0 0; max-width: 90ch; }
+section.lean { margin: 28px 0 0; max-width: 90ch; }
+.lean p { margin: 0 0 10px; color: var(--muted); }
+.lean strong { color: var(--text); }
+.ref .codes { margin-bottom: 8px; }
+.ref details { margin-top: 10px; font-size: 13px; }
+.ref summary { cursor: pointer; font-weight: 600; }
+.ref .rule { color: var(--muted); margin: 8px 0; }
+ol.photos { margin: 0; padding-left: 22px; }
+ol.photos li { margin: 6px 0; }
+ol.photos a { color: var(--text); word-break: break-word; }
+ol.photos .by { display: block; color: var(--muted); font-size: 12px; }
+.dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: var(--c); margin-right: 6px; vertical-align: 0; }
+.bottom {
+  grid-area: bottom;
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  gap: 18px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.frame { margin: 0; min-width: 0; }
+
+.frame-img { border-radius: 8px; overflow: hidden; background: #000; aspect-ratio: 4 / 3; }
+.frame img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.frame figcaption { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; font-size: 12px; color: var(--muted); gap: 8px; }
+.toggle {
+  font: inherit;
+  font-size: 12px;
+  color: var(--text);
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  padding: 4px 12px;
+  cursor: pointer;
+}
+.toggle[aria-pressed="true"] { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+dl.meta {
+  margin: 0;
+  align-content: start;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  font-size: 12px;
+}
+dl.meta dt { color: var(--muted); }
+dl.meta dd { margin: 0; font-size: 12px; }
+section.method { margin-top: 48px; max-width: 78ch; }
+.method h2 { font-size: 20px; margin: 0 0 8px; }
+.method ol { padding-left: 20px; margin: 0; }
+.method li { margin: 6px 0; color: var(--muted); }
+.method li strong { color: var(--text); font-weight: 600; }
+footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
+@media (max-width: 900px) {
+  section.explain { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 560px) {
+  .wrap { padding-top: 28px; }
+  .palette { display: flex; flex-wrap: wrap; }
+  .chip { flex: 1 0 25%; aspect-ratio: auto; height: 92px; padding: 6px; }
+  .chip span { white-space: normal; line-height: 1.2; border-radius: 8px; font-size: 11px; padding: 3px 6px; }
+  section.explain { grid-template-columns: 1fr; }
+  .card {
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 14px;
+    padding: 14px;
+  }
+  .info h2 { font-size: 19px; }
+  .sub { margin-bottom: 10px; }
+  .shades { height: 40px; }
+  .shades span { font-size: 9px; }
+  .shade-cap { font-size: 10px; }
+  .codes, .codes tbody { display: block; }
+  .codes tr { display: grid; grid-template-columns: 104px minmax(0, 1fr); align-items: center; }
+  .codes th[scope="row"] { white-space: normal; width: auto; line-height: 1.25; }
+  .codes tr.tier { display: block; }
+  .codes tr.tier th { display: block; }
+  .codes td.note { grid-column: 2; text-align: left; padding: 0 0 4px; }
+  .codes td.note:empty { display: none; }
+  .code { font-size: 12.5px; }
+  .bottom { grid-template-columns: 1fr; }
+  table.sum { min-width: 0; }
+  .sum, .sum tbody, .sum tr { display: block; }
+  .sum thead { display: none; }
+  .sum tr { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+  .sum tbody tr:last-child { border-bottom: 0; }
+  .sum th[scope="row"] { display: block; padding: 0 0 6px; border: 0; }
+  .sum td { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 3px 0; border: 0; white-space: normal; text-align: right; }
+  .sum td::before { content: attr(data-label); color: var(--muted); font-size: 12px; text-align: left; }
+  .card { grid-template-areas: "sw info" "codes codes" "bottom bottom" "ref ref"; }
+  .compare { grid-template-columns: 1fr; }
+  dl.meta { grid-template-columns: repeat(2, 1fr); }
+}
+
+.rcard { grid-template-areas: "sw info" "body body" !important; }
+.rbody { grid-area: body; min-width: 0; }
+.rcard .shade-cap { display: block; }
+.rcard .verdict { margin: 0 0 10px; }
+.pstrip { display: flex; flex-wrap: wrap; gap: 3px; margin-top: auto; }
+.ps { width: 22px; height: 22px; border-radius: 4px; background: var(--c); box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+.est { background: var(--code-bg); border-radius: 10px; padding: 12px 14px; margin: 0 0 14px; font-size: 13px; }
+.est p { margin: 0 0 10px; color: var(--muted); }
+.est-note { font-size: 13px; color: var(--muted); margin: 0 0 14px; }
+.band { display: flex; flex-wrap: wrap; gap: 8px 18px; align-items: center; }
+.bl { font-size: 12px; font-weight: 600; width: 100%; }
+.bi { display: inline-flex; align-items: center; gap: 6px; }
+.bi small { color: var(--muted); }
+.alts { border-top: 1px solid var(--line); margin-top: 16px; padding-top: 14px; }
+.alts h3 { margin: 0 0 10px; font-size: 17px; }
+.alt { border: 1px solid var(--line); border-radius: 10px; padding: 12px; margin-bottom: 10px; }
+.alt-head { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+.alt-head .sq { width: 56px; height: 56px; border-radius: 8px; background: var(--c); flex: none; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.08); }
+.alt-label { display: block; font-size: 12px; color: var(--muted); }
+.alt-hex { display: block; font-size: 15px; font-weight: 700; }
+.alt-head small { display: block; font-size: 12px; color: var(--muted); }
+dl.cc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 14px; margin: 0; font-size: 12px; }
+dl.cc div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+dl.cc dt { color: var(--muted); font-size: 11px; }
+dl.cc dd { margin: 0; }
+dl.cc .code { font-size: 12px; }
+.alt-frame { margin: 10px 0 0; }
+.alt-frame img { display: block; width: 100%; max-width: 280px; height: auto; border-radius: 6px; }
+.alt-frame figcaption { font-size: 11px; color: var(--muted); margin-top: 4px; }
+.v-est { background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--text); }
+.rbody details { margin-top: 10px; font-size: 13px; }
+.rbody summary { cursor: pointer; font-weight: 600; }
+.rbody .rule { color: var(--muted); margin: 8px 0; }
+table.loo { min-width: 640px; }
+@media (max-width: 560px) {
+  .rcard { grid-template-areas: "sw info" "body body" !important; }
+  table.loo { min-width: 0; }
+  dl.cc { grid-template-columns: 1fr; }
+  .ps { width: 18px; height: 18px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Colores reales de mi tierra</h1>
+    <p>The seven colors from the 1991 Harris Paints song, measured from photos of the real things they are named after. The ad's own values are kept on each card as an alternate.</p>
+  </header>
+
+  <nav class="palette" aria-label="Palette">
+    <a class="chip" href="#frambuesa-piragua" style="--c:#C03621"><span>Frambuesa piragua</span></a><a class="chip" href="#blanco-coco" style="--c:#DDDFE0"><span>Blanco coco</span></a><a class="chip" href="#amarillo-mango" style="--c:#DEA71E"><span>Amarillo mangó</span></a><a class="chip" href="#verde-quenepa" style="--c:#708839"><span>Verde quenepa</span></a><a class="chip" href="#azul-adoquines" style="--c:#6F7781"><span>Azul adoquines</span></a><a class="chip" href="#rojo-flamboyan" style="--c:#D32E1D"><span>Rojo flamboyán</span></a><a class="chip" href="#turquesa-mar-caribe" style="--c:#5A9797"><span>Turquesa mar Caribe</span></a>
+  </nav>
+
+  <section class="summary">
+    <h2>The seven colors</h2>
+    <div class="table-wrap">
+      <table class="sum">
+        <thead><tr><th>Color</th><th>Primary</th><th>Source</th><th>In the ad</th><th>ΔE</th><th>Ad vs real</th></tr></thead>
+        <tbody><tr>
+      <th scope="row"><a href="#frambuesa-piragua">Frambuesa piragua</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#C03621"></span><code>#C03621</code></span></td>
+      <td data-label="Source"><span class="val">ad minus the average lean, checked against 1 photo</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#B43C05"></span><code>#B43C05</code></span></td>
+      <td data-label="ΔE"><span class="val">6.3</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-est">estimate</span></span></td>
+    </tr><tr>
+      <th scope="row"><a href="#blanco-coco">Blanco coco</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#DDDFE0"></span><code>#DDDFE0</code></span></td>
+      <td data-label="Source"><span class="val">median of 7 photos</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#EBE7E8"></span><code>#EBE7E8</code></span></td>
+      <td data-label="ΔE"><span class="val">3.8</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-ok">consistent</span><small class="weak"> weak</small></span></td>
+    </tr><tr>
+      <th scope="row"><a href="#amarillo-mango">Amarillo mangó</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#DEA71E"></span><code>#DEA71E</code></span></td>
+      <td data-label="Source"><span class="val">median of 10 photos</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#E7CA5B"></span><code>#E7CA5B</code></span></td>
+      <td data-label="ΔE"><span class="val">10.3</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-edge">at the edge</span></span></td>
+    </tr><tr>
+      <th scope="row"><a href="#verde-quenepa">Verde quenepa</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#708839"></span><code>#708839</code></span></td>
+      <td data-label="Source"><span class="val">median of 3 photos</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#5F9F69"></span><code>#5F9F69</code></span></td>
+      <td data-label="ΔE"><span class="val">13.0</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-shift">shifted</span><small class="weak"> indicative</small></span></td>
+    </tr><tr>
+      <th scope="row"><a href="#azul-adoquines">Azul adoquines</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#6F7781"></span><code>#6F7781</code></span></td>
+      <td data-label="Source"><span class="val">median of 10 photos</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#6A7585"></span><code>#6A7585</code></span></td>
+      <td data-label="ΔE"><span class="val">2.8</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-ok">consistent</span><small class="weak"> weak</small></span></td>
+    </tr><tr>
+      <th scope="row"><a href="#rojo-flamboyan">Rojo flamboyán</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#D32E1D"></span><code>#D32E1D</code></span></td>
+      <td data-label="Source"><span class="val">median of 15 photos</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#AB5321"></span><code>#AB5321</code></span></td>
+      <td data-label="ΔE"><span class="val">11.1</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-shift">shifted</span></span></td>
+    </tr><tr>
+      <th scope="row"><a href="#turquesa-mar-caribe">Turquesa mar Caribe</a></th>
+      <td data-label="Primary"><span class="val"><span class="mini" style="--c:#5A9797"></span><code>#5A9797</code></span></td>
+      <td data-label="Source"><span class="val">median of 9 photos</span></td>
+      <td data-label="In the ad"><span class="val"><span class="mini" style="--c:#439BB6"></span><code>#439BB6</code></span></td>
+      <td data-label="ΔE"><span class="val">9.7</span></td>
+      <td data-label="Ad vs real"><span class="val"><span class="badge v-edge">at the edge</span></span></td>
+    </tr></tbody>
+      </table>
+    </div>
+    <p class="sum-note">"Ad vs real" is consistent when the ad's hue and chroma fall inside the range the photos span, and at the edge when it misses by 2 or less. Lightness is left out because in photos it mostly follows the exposure.</p>
+  </section>
+
+  <p class="caveat">Photos are not a lab measurement. Each camera sets its own white balance and exposure, so each value is the median across photographers, and the squares on each card show the spread. Blanco coco and azul adoquines are nearly gray, so white balance decides most of their value. Verde quenepa rests on 3 photographers and frambuesa piragua on an estimate checked against 1 photo.</p>
+
+  <section class="lean">
+    <h2>Is there a common factor?</h2>
+    <p><strong>Yes, in hue.</strong> The video stores color as brightness plus a two-axis color plane. Measured in that plane, every colorful ad color is rotated the same way from the real thing. The rotation is 5.9° for amarillo mangó, 14.6° for turquesa and 18.9° for rojo flamboyán. Verde quenepa is the outlier at 43.5°, from 3 photos. Frambuesa sits at 10.2° from its single photo. The three colors with solid photo sets average 13.2°, give or take 5.4°.</p>
+    <p>Saturation and brightness have no common factor. Rojo flamboyán's saturation in the ad is 0.66 of the flower's, mango's is 0.76 and turquesa's is 1.63 times the water's. So only the hue rotation carries from one color to another.</p>
+    <p>Each of the three was tested with the rotation fitted from the other two. Removing that lean moves every one toward its photos.</p>
+    <div class="table-wrap">
+      <table class="sum loo">
+        <thead><tr><th>Color</th><th>Rotation from the other two</th><th>Ad hue, before to after</th><th>Photos</th><th>ΔE, before to after</th></tr></thead>
+        <tbody><tr><th scope="row">Amarillo mangó</th><td data-label="Rotation from the other two"><span class="val">16.8°</span></td><td data-label="Ad hue, before to after"><span class="val">88.8° to 72.7°</span></td><td data-label="Photos"><span class="val">79.6° <small>(range 73° to 87°)</small></span></td><td data-label="ΔE, before to after"><span class="val">10.3 to 9.8</span></td></tr><tr><th scope="row">Rojo flamboyán</th><td data-label="Rotation from the other two"><span class="val">10.3°</span></td><td data-label="Ad hue, before to after"><span class="val">52.4° to 43.2°</span></td><td data-label="Photos"><span class="val">39.2° <small>(range 33° to 42°)</small></span></td><td data-label="ΔE, before to after"><span class="val">11.1 to 6.9</span></td></tr><tr><th scope="row">Turquesa mar Caribe</th><td data-label="Rotation from the other two"><span class="val">12.4°</span></td><td data-label="Ad hue, before to after"><span class="val">226.8° to 201.2°</span></td><td data-label="Photos"><span class="val">197.7° <small>(range 181° to 231°)</small></span></td><td data-label="ΔE, before to after"><span class="val">9.7 to 4.6</span></td></tr></tbody>
+      </table>
+    </div>
+    <p class="sum-note">Mango overcorrects to 72.7°, just below its photo range. Its ΔE barely moves because most of its gap is lightness, which the rotation does not touch.</p>
+    <p><strong>The lean is shared, not specific to reds.</strong> Rojo flamboyán alone leans 18.9°, and removing that much from frambuesa overshoots to <code>#C4332F</code>, ΔE 5.6 from the piragua photo. The shared 13.2° gives <code>#C03621</code>, ΔE 2.5. The piragua photo played no part in fitting the factor, so that is an independent check.</p>
+    <p><strong>This still does not prove a tint error in the tape transfer.</strong> The factor was fitted against the real things, not the original paints, so it mixes transfer error with how the paints were designed.</p>
+  </section>
+
+  <section class="explain">
+    <h2>Which code to trust</h2>
+    <div class="tierbox"><h3><span class="rank">1</span>HEX and RGB</h3><p>The master for each color. The photos and the video are both sRGB, so HEX is the measured value rounded to 8 bits.</p></div>
+    <div class="tierbox"><h3><span class="rank">2</span>HSL and HSB</h3><p>The RGB numbers re-expressed as hue, saturation and lightness. Nothing is added or lost beyond rounding.</p></div>
+    <div class="tierbox"><h3><span class="rank">3</span>Lab, LCH, OKLCH</h3><p>Exact math from sRGB into device-independent spaces. Give the Lab value to a paint store, since their color-matching spectrophotometers read in Lab.</p></div>
+    <div class="tierbox"><h3><span class="rank">4</span>CMYK</h3><p>The least accurate. CMYK depends on ink, paper and press, so the numbers change with the ICC profile. ΔE shows how far the print lands from the screen color. Below 2 is hard to see.</p></div>
+  </section>
+
+  <main class="cards">
+    
+<article class="card rcard" id="frambuesa-piragua">
+  <div class="swatch" style="--c:#C03621;--ink:#fff"><span class="swatch-hex">#C03621</span></div>
+  <div class="info">
+    <h2>Frambuesa piragua</h2>
+    <p class="sub">Estimate: the ad value with the average lean removed, checked against 1 photo.</p>
+    <p class="verdict"><span class="badge v-est">estimate</span> <span class="strength">only hue adjusted</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#C73B1E" title="Comiendo piragua en Paseo de la Princesa, San Juan, Puerto Rico.jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    <div class="est">
+      <p>Only the hue was adjusted, by the shared 13.2°. Saturation and brightness are the ad's, because neither shifted in a common way. The one real piragua photo sits ΔE 2.5 away and was not used to fit the factor.</p>
+      <div class="band">
+        <span class="bl">Range from the ±5.4° spread</span>
+        <span class="bi"><span class="mini" style="--c:#BC3815"></span><button class="code" type="button" data-copy="#BC3815" title="Copy">#BC3815</button> <small>7.7°, ΔE 2.8 to the photo</small></span>
+        <span class="bi"><span class="mini" style="--c:#C4332E"></span><button class="code" type="button" data-copy="#C4332E" title="Copy">#C4332E</button> <small>18.6°, ΔE 5.4 to the photo</small></span>
+      </div>
+    </div>
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, estimated</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#C03621" title="Copy">#C03621</button></td><td class="note">estimate</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(192, 54, 33)" title="Copy">rgb(192, 54, 33)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(8, 71%, 44%)" title="Copy">hsl(8, 71%, 44%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(8, 83%, 75%)" title="Copy">8°, 83%, 75%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(44.9% 54.8 45.4)" title="Copy">lab(44.9% 54.8 45.4)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(44.9% 71.2 39.7)" title="Copy">lch(44.9% 71.2 39.7)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(53.9% 0.178 31.6)" title="Copy">oklch(53.9% 0.178 31.6)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(17%, 92%, 100%, 7%)" title="Copy">C17 M92 Y100 K7</button></td><td class="note"><span class="ok">ΔE 1.0, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(16%, 91%, 97%, 6%)" title="Copy">C16 M91 Y97 K6</button></td><td class="note"><span class="ok">ΔE 0.2, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(0%, 72%, 83%, 25%)" title="Copy">C0 M72 Y83 K25</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#C73B1E"></div><div><span class="alt-label">The one piragua photo</span><code class="alt-hex">#C73B1E</code><small>ΔE 2.5 from the estimate. Its flavor is not identified.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#C73B1E" title="Copy">#C73B1E</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(199, 59, 30)" title="Copy">rgb(199, 59, 30)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(10, 74%, 45%)" title="Copy">hsl(10, 74%, 45%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(46.9% 55.2 49.1)" title="Copy">lab(46.9% 55.2 49.1)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(55.6% 0.181 33.3)" title="Copy">oklch(55.6% 0.181 33.3)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(15%, 91%, 100%, 5%)" title="Copy">C15 M91 Y100 K5</button> <small class="ok">ΔE 1.9</small></dd></div></dl>
+        
+      </div><div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#B43C05"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#B43C05</code><small>ΔE 5.8 from the photo, before removing the lean.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#B43C05" title="Copy">#B43C05</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(180, 60, 5)" title="Copy">rgb(180, 60, 5)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(19, 95%, 36%)" title="Copy">hsl(19, 95%, 36%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(43.4% 48.1 53.8)" title="Copy">lab(43.4% 48.1 53.8)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(52.4% 0.165 39.1)" title="Copy">oklch(52.4% 0.165 39.1)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(20%, 88%, 100%, 12%)" title="Copy">C20 M88 Y100 K12</button> <small class="warn">ΔE 5.7</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Frambuesa piragua" width="480" height="360" loading="lazy"><figcaption>Frame at 16.8 s. Scene 16.65 to 18.90 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 1 photo</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#C73B1E"></span><a href="https://commons.wikimedia.org/wiki/File:Comiendo_piragua_en_Paseo_de_la_Princesa,_San_Juan,_Puerto_Rico.jpg" target="_blank" rel="noopener">Comiendo piragua en Paseo de la Princesa, San Juan, Puerto Rico.jpg</a><span class="by">Steam Pipe Trunk Distribution Venue, 2014, Apple iPhone 5, CC BY 2.0</span></li></ol>
+    </details>
+  </div>
+</article>
+<article class="card rcard" id="blanco-coco">
+  <div class="swatch" style="--c:#DDDFE0;--ink:#111"><span class="swatch-hex">#DDDFE0</span></div>
+  <div class="info">
+    <h2>Blanco coco</h2>
+    <p class="sub">Median of 7 photos of the white flesh of an opened coconut.</p>
+    <p class="verdict"><span class="badge v-ok">consistent</span> <span class="strength">weak: nearly gray, so camera white balance decides</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#D3CFBE" title="A coconut, broken in half.jpg"></span><span class="ps" style="--c:#A0ABB5" title="Broken Coconut.jpg"></span><span class="ps" style="--c:#E8E9EB" title="Brokencoconut.jpg"></span><span class="ps" style="--c:#D5D6D8" title="COCONUT OPEND.JPG"></span><span class="ps" style="--c:#DFDEE3" title="Coconut meat, Andamans.jpg"></span><span class="ps" style="--c:#ECDDC6" title="Cracked coconut.jpg"></span><span class="ps" style="--c:#E0EBE8" title="Râper la pulpe du coco (Tieti, Nord, New Caledonia).jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, measured from photos</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#DDDFE0" title="Copy">#DDDFE0</button></td><td class="note">median of 7 photos</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(221, 223, 224)" title="Copy">rgb(221, 223, 224)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(200, 5%, 87%)" title="Copy">hsl(200, 5%, 87%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(200, 1%, 88%)" title="Copy">200°, 1%, 88%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(88.7% -0.6 -0.7)" title="Copy">lab(88.7% -0.6 -0.7)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(88.7% 0.9 232.9)" title="Copy">lch(88.7% 0.9 232.9)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(90.2% 0.003 230.3)" title="Copy">oklch(90.2% 0.003 230.3)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(11%, 9%, 9%, 0%)" title="Copy">C11 M9 Y9 K0</button></td><td class="note"><span class="ok">ΔE 1.1, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(13%, 9%, 10%, 0%)" title="Copy">C13 M9 Y10 K0</button></td><td class="note"><span class="ok">ΔE 1.1, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(1%, 0%, 0%, 12%)" title="Copy">C1 M0 Y0 K12</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#EBE7E8"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#EBE7E8</code><small>ΔE 3.8 from the photos. Ad vs real: consistent.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#EBE7E8" title="Copy">#EBE7E8</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(235, 231, 232)" title="Copy">rgb(235, 231, 232)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(345, 9%, 91%)" title="Copy">hsl(345, 9%, 91%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(92.0% 1.5 0.0)" title="Copy">lab(92.0% 1.5 0.0)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(93.1% 0.005 358.7)" title="Copy">oklch(93.1% 0.005 358.7)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(6%, 7%, 5%, 0%)" title="Copy">C6 M7 Y5 K0</button> <small class="ok">ΔE 1.0</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Blanco coco" width="480" height="360" loading="lazy"><figcaption>Frame at 19.4 s. Scene 19.25 to 20.63 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 7 photos</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#D3CFBE"></span><a href="https://commons.wikimedia.org/wiki/File:A_coconut,_broken_in_half.jpg" target="_blank" rel="noopener">A coconut, broken in half.jpg</a><span class="by">Slyronit, 2020, Apple iPhone X, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#A0ABB5"></span><a href="https://commons.wikimedia.org/wiki/File:Broken_Coconut.jpg" target="_blank" rel="noopener">Broken Coconut.jpg</a><span class="by">Thamizhpparithi Maari, 2011, SONY DSC-H20, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#E8E9EB"></span><a href="https://commons.wikimedia.org/wiki/File:Brokencoconut.jpg" target="_blank" rel="noopener">Brokencoconut.jpg</a><span class="by">Tom Woodward, 2008, Canon EOS DIGITAL REBEL XT, CC BY-SA 2.0</span></li><li><span class="dot" style="--c:#D5D6D8"></span><a href="https://commons.wikimedia.org/wiki/File:COCONUT_OPEND.JPG" target="_blank" rel="noopener">COCONUT OPEND.JPG</a><span class="by">Molngl, 2009, SONY DSC-W210, Public domain</span></li><li><span class="dot" style="--c:#DFDEE3"></span><a href="https://commons.wikimedia.org/wiki/File:Coconut_meat,_Andamans.jpg" target="_blank" rel="noopener">Coconut meat, Andamans.jpg</a><span class="by">Vyacheslav Argenberg, 2009, OLYMPUS IMAGING CORP. E-P1, CC BY 4.0</span></li><li><span class="dot" style="--c:#ECDDC6"></span><a href="https://commons.wikimedia.org/wiki/File:Cracked_coconut.jpg" target="_blank" rel="noopener">Cracked coconut.jpg</a><span class="by">Rimshot, 2007, FUJIFILM FinePix S7000 , CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#E0EBE8"></span><a href="https://commons.wikimedia.org/wiki/File:Râper_la_pulpe_du_coco_(Tieti,_Nord,_New_Caledonia).jpg" target="_blank" rel="noopener">Râper la pulpe du coco (Tieti, Nord, New Caledonia).jpg</a><span class="by">gérard, 2017, NIKON COOLPIX L810, CC BY-SA 2.0</span></li></ol>
+    </details>
+  </div>
+</article>
+<article class="card rcard" id="amarillo-mango">
+  <div class="swatch" style="--c:#DEA71E;--ink:#111"><span class="swatch-hex">#DEA71E</span></div>
+  <div class="info">
+    <h2>Amarillo mangó</h2>
+    <p class="sub">Median of 10 photos of the cut flesh of a ripe mango.</p>
+    <p class="verdict"><span class="badge v-edge">at the edge</span> <span class="strength">10 photos, one per photographer</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#CF960E" title="&#x27;Chaunsa&#x27; mango (sliced).jpg"></span><span class="ps" style="--c:#F6BF20" title="3535Mango slices 02.jpg"></span><span class="ps" style="--c:#ECBB0C" title="Cut Mango 35630747426.jpg"></span><span class="ps" style="--c:#D7AF23" title="Cut mangoes on plate.jpg"></span><span class="ps" style="--c:#DEA347" title="Cut mangoes.jpg"></span><span class="ps" style="--c:#EAA40F" title="Mango Hedgehog (4818759374).jpg"></span><span class="ps" style="--c:#C5A405" title="Mango Slices .jpg"></span><span class="ps" style="--c:#E7B508" title="Sliced Mango (6315279866).jpg"></span><span class="ps" style="--c:#D38F13" title="Sliced Mexican mangoes.JPG"></span><span class="ps" style="--c:#D5920A" title="Sliced mango, Koufu food court, Singapore Management University - 20141105.jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, measured from photos</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#DEA71E" title="Copy">#DEA71E</button></td><td class="note">median of 10 photos</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(222, 167, 30)" title="Copy">rgb(222, 167, 30)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(43, 76%, 49%)" title="Copy">hsl(43, 76%, 49%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(43, 86%, 87%)" title="Copy">43°, 86%, 87%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(72.2% 12.9 70.1)" title="Copy">lab(72.2% 12.9 70.1)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(72.2% 71.3 79.6)" title="Copy">lch(72.2% 71.3 79.6)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(76.0% 0.150 83.5)" title="Copy">oklch(76.0% 0.150 83.5)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(13%, 35%, 100%, 0%)" title="Copy">C13 M35 Y100 K0</button></td><td class="note"><span class="ok">ΔE 0.7, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(12%, 35%, 96%, 2%)" title="Copy">C12 M35 Y96 K2</button></td><td class="note"><span class="ok">ΔE 0.4, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(0%, 25%, 86%, 13%)" title="Copy">C0 M25 Y86 K13</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#E7CA5B"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#E7CA5B</code><small>ΔE 10.3 from the photos. Ad vs real: at the edge.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#E7CA5B" title="Copy">#E7CA5B</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(231, 202, 91)" title="Copy">rgb(231, 202, 91)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(48, 74%, 63%)" title="Copy">hsl(48, 74%, 63%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(82.2% 1.2 57.8)" title="Copy">lab(82.2% 1.2 57.8)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(84.3% 0.134 94.7)" title="Copy">oklch(84.3% 0.134 94.7)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(10%, 17%, 77%, 0%)" title="Copy">C10 M17 Y77 K0</button> <small class="ok">ΔE 0.3</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Amarillo mangó" width="480" height="360" loading="lazy"><figcaption>Frame at 23.1 s. Scene 22.93 to 26.04 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 10 photos</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#CF960E"></span><a href="https://commons.wikimedia.org/wiki/File:&#x27;Chaunsa&#x27;_mango_(sliced).jpg" target="_blank" rel="noopener">&#x27;Chaunsa&#x27; mango (sliced).jpg</a><span class="by">Salil Kumar Mukherjee, 2021, Canon PowerShot A1000 IS, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#F6BF20"></span><a href="https://commons.wikimedia.org/wiki/File:3535Mango_slices_02.jpg" target="_blank" rel="noopener">3535Mango slices 02.jpg</a><span class="by">Judgefloro, 2020, NIKON COOLPIX AW100  , CC0</span></li><li><span class="dot" style="--c:#ECBB0C"></span><a href="https://commons.wikimedia.org/wiki/File:Cut_Mango_35630747426.jpg" target="_blank" rel="noopener">Cut Mango 35630747426.jpg</a><span class="by">bangdoll, 2017, Apple iPhone 7 Plus, CC BY-SA 2.0</span></li><li><span class="dot" style="--c:#D7AF23"></span><a href="https://commons.wikimedia.org/wiki/File:Cut_mangoes_on_plate.jpg" target="_blank" rel="noopener">Cut mangoes on plate.jpg</a><span class="by">Shahzaib Damn Cruze, 2021, samsung SM-G950F, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#DEA347"></span><a href="https://commons.wikimedia.org/wiki/File:Cut_mangoes.jpg" target="_blank" rel="noopener">Cut mangoes.jpg</a><span class="by">Shalu Sharma, 2016, Microsoft Lumia 640 XL LTE, CC BY 2.0</span></li><li><span class="dot" style="--c:#EAA40F"></span><a href="https://commons.wikimedia.org/wiki/File:Mango_Hedgehog_(4818759374).jpg" target="_blank" rel="noopener">Mango Hedgehog (4818759374).jpg</a><span class="by">tomatoes and friends, 2010, SONY DSC-S700, CC BY 2.0</span></li><li><span class="dot" style="--c:#C5A405"></span><a href="https://commons.wikimedia.org/wiki/File:Mango_Slices_.jpg" target="_blank" rel="noopener">Mango Slices .jpg</a><span class="by">Ferdous, 2016, HUAWEI Che2-L11, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#E7B508"></span><a href="https://commons.wikimedia.org/wiki/File:Sliced_Mango_(6315279866).jpg" target="_blank" rel="noopener">Sliced Mango (6315279866).jpg</a><span class="by">Veganbaking.net, 2011, Canon EOS 60D, CC BY-SA 2.0</span></li><li><span class="dot" style="--c:#D38F13"></span><a href="https://commons.wikimedia.org/wiki/File:Sliced_Mexican_mangoes.JPG" target="_blank" rel="noopener">Sliced Mexican mangoes.JPG</a><span class="by">BrokenSphere, 2008, OLYMPUS IMAGING CORP.   FE280,X820,C520        , CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#D5920A"></span><a href="https://commons.wikimedia.org/wiki/File:Sliced_mango,_Koufu_food_court,_Singapore_Management_University_-_20141105.jpg" target="_blank" rel="noopener">Sliced mango, Koufu food court, Singapore Management University - 20141105.jpg</a><span class="by">Smuconlaw, 2014, Apple iPhone 5, CC BY-SA 4.0</span></li></ol>
+    </details>
+  </div>
+</article>
+<article class="card rcard" id="verde-quenepa">
+  <div class="swatch" style="--c:#708839;--ink:#fff"><span class="swatch-hex">#708839</span></div>
+  <div class="info">
+    <h2>Verde quenepa</h2>
+    <p class="sub">Median of 3 photos of the green skin of the quenepa fruit.</p>
+    <p class="verdict"><span class="badge v-shift">shifted</span> <span class="strength">indicative, 3 photographers</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#76A236" title="Melicoccus bijugatus (Sapindaceae).jpg"></span><span class="ps" style="--c:#708839" title="Melicoccus bijugatus2.jpg"></span><span class="ps" style="--c:#555E21" title="Huaya, fruta de le región de Yucatán.jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    <p class="est-note">The shared lean accounts for only 13° of verde's 44° gap. Either the paint was bluer than quenepa beyond the lean, or 3 photos are not enough to tell.</p>
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, measured from photos</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#708839" title="Copy">#708839</button></td><td class="note">median of 3 photos</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(112, 136, 57)" title="Copy">rgb(112, 136, 57)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(78, 41%, 38%)" title="Copy">hsl(78, 41%, 38%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(78, 58%, 53%)" title="Copy">78°, 58%, 53%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(53.5% -18.5 38.5)" title="Copy">lab(53.5% -18.5 38.5)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(53.5% 42.7 115.6)" title="Copy">lch(53.5% 42.7 115.6)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(59.0% 0.109 123.9)" title="Copy">oklch(59.0% 0.109 123.9)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(59%, 30%, 99%, 11%)" title="Copy">C59 M30 Y99 K11</button></td><td class="note"><span class="ok">ΔE 0.5, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(58%, 29%, 94%, 12%)" title="Copy">C58 M29 Y94 K12</button></td><td class="note"><span class="ok">ΔE 0.3, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(18%, 0%, 58%, 47%)" title="Copy">C18 M0 Y58 K47</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#5F9F69"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#5F9F69</code><small>ΔE 13.0 from the photos. Ad vs real: shifted.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#5F9F69" title="Copy">#5F9F69</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(95, 159, 105)" title="Copy">rgb(95, 159, 105)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(129, 25%, 50%)" title="Copy">hsl(129, 25%, 50%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(60.1% -30.3 21.6)" title="Copy">lab(60.1% -30.3 21.6)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(64.5% 0.104 148.1)" title="Copy">oklch(64.5% 0.104 148.1)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(66%, 18%, 75%, 2%)" title="Copy">C66 M18 Y75 K2</button> <small class="ok">ΔE 0.6</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Verde quenepa" width="480" height="360" loading="lazy"><figcaption>Frame at 27.6 s. Scene 27.47 to 30.82 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 3 photos</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#76A236"></span><a href="https://commons.wikimedia.org/wiki/File:Melicoccus_bijugatus_(Sapindaceae).jpg" target="_blank" rel="noopener">Melicoccus bijugatus (Sapindaceae).jpg</a><span class="by">Filo gèn&#x27;, 2019, Xiaomi Redmi 6, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#708839"></span><a href="https://commons.wikimedia.org/wiki/File:Melicoccus_bijugatus2.jpg" target="_blank" rel="noopener">Melicoccus bijugatus2.jpg</a><span class="by">unknown photographer, 2006, FUJIFILM FinePix Z1     , Public domain</span></li><li><span class="dot" style="--c:#555E21"></span><a href="https://commons.wikimedia.org/wiki/File:Huaya,_fruta_de_le_región_de_Yucatán.jpg" target="_blank" rel="noopener">Huaya, fruta de le región de Yucatán.jpg</a><span class="by">Alvaro de J. Carcaño Loeza, 2016, HUAWEI ALE-L23, CC BY-SA 4.0</span></li></ol>
+    </details>
+  </div>
+</article>
+<article class="card rcard" id="azul-adoquines">
+  <div class="swatch" style="--c:#6F7781;--ink:#fff"><span class="swatch-hex">#6F7781</span></div>
+  <div class="info">
+    <h2>Azul adoquines</h2>
+    <p class="sub">Median of 10 photos of the dry blue cobblestones of Old San Juan, in daylight.</p>
+    <p class="verdict"><span class="badge v-ok">consistent</span> <span class="strength">weak: nearly gray, so camera white balance decides</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#626579" title="Caleta de San Juan (01).jpg"></span><span class="ps" style="--c:#717382" title="Calle Fortaleza with umbrellas in Old San Juan, Puerto Rico.jpg"></span><span class="ps" style="--c:#667175" title="Calle Luna - San Juan Puerto Rico.jpg"></span><span class="ps" style="--c:#828D98" title="Calle San Sebastian 2021-08-09 07-19-44 1.jpg"></span><span class="ps" style="--c:#C7CAD1" title="Calle de La Fortaleza.jpg"></span><span class="ps" style="--c:#B1BDC5" title="Calle de San Justo in Old san juan.jpg"></span><span class="ps" style="--c:#575C68" title="CalleenSanJuan.JPG"></span><span class="ps" style="--c:#5F6F86" title="La Fortaleza St. Old San Juan.jpg"></span><span class="ps" style="--c:#7F7F89" title="La Fortaleza Street.JPG"></span><span class="ps" style="--c:#727A7E" title="San Juan, calles 5.jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, measured from photos</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#6F7781" title="Copy">#6F7781</button></td><td class="note">median of 10 photos</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(111, 119, 129)" title="Copy">rgb(111, 119, 129)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(213, 7%, 47%)" title="Copy">hsl(213, 7%, 47%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(213, 14%, 51%)" title="Copy">213°, 14%, 51%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(49.6% -1.5 -6.6)" title="Copy">lab(49.6% -1.5 -6.6)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(49.6% 6.7 257.5)" title="Copy">lch(49.6% 6.7 257.5)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(56.6% 0.018 254.1)" title="Copy">oklch(56.6% 0.018 254.1)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(59%, 47%, 40%, 9%)" title="Copy">C59 M47 Y40 K9</button></td><td class="note"><span class="ok">ΔE 1.0, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(57%, 44%, 37%, 15%)" title="Copy">C57 M44 Y37 K15</button></td><td class="note"><span class="ok">ΔE 1.0, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(14%, 8%, 0%, 49%)" title="Copy">C14 M8 Y0 K49</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#6A7585"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#6A7585</code><small>ΔE 2.8 from the photos. Ad vs real: consistent.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#6A7585" title="Copy">#6A7585</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(106, 117, 133)" title="Copy">rgb(106, 117, 133)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(216, 11%, 47%)" title="Copy">hsl(216, 11%, 47%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(48.7% -1.5 -10.3)" title="Copy">lab(48.7% -1.5 -10.3)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(55.9% 0.028 257.7)" title="Copy">oklch(55.9% 0.028 257.7)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(62%, 49%, 36%, 8%)" title="Copy">C62 M49 Y36 K8</button> <small class="ok">ΔE 0.5</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Azul adoquines" width="480" height="360" loading="lazy"><figcaption>Frame at 31.3 s. Scene 31.18 to 33.39 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 10 photos</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#626579"></span><a href="https://commons.wikimedia.org/wiki/File:Caleta_de_San_Juan_(01).jpg" target="_blank" rel="noopener">Caleta de San Juan (01).jpg</a><span class="by">Moebiusuibeom-en, 2015, Apple iPhone 6 Plus, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#717382"></span><a href="https://commons.wikimedia.org/wiki/File:Calle_Fortaleza_with_umbrellas_in_Old_San_Juan,_Puerto_Rico.jpg" target="_blank" rel="noopener">Calle Fortaleza with umbrellas in Old San Juan, Puerto Rico.jpg</a><span class="by">Jorge Rodriguez, 2018, Canon EOS 77D, CC BY 2.0</span></li><li><span class="dot" style="--c:#667175"></span><a href="https://commons.wikimedia.org/wiki/File:Calle_Luna_-_San_Juan_Puerto_Rico.jpg" target="_blank" rel="noopener">Calle Luna - San Juan Puerto Rico.jpg</a><span class="by">Ian Poellet, 2017, Panasonic DMC-FZ47, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#828D98"></span><a href="https://commons.wikimedia.org/wiki/File:Calle_San_Sebastian_2021-08-09_07-19-44_1.jpg" target="_blank" rel="noopener">Calle San Sebastian 2021-08-09 07-19-44 1.jpg</a><span class="by">G. Edward Johnson, 2021, NIKON CORPORATION NIKON D800, CC BY 4.0</span></li><li><span class="dot" style="--c:#C7CAD1"></span><a href="https://commons.wikimedia.org/wiki/File:Calle_de_La_Fortaleza.jpg" target="_blank" rel="noopener">Calle de La Fortaleza.jpg</a><span class="by">Xemenendura, 2012, samsung GT-I9100, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#B1BDC5"></span><a href="https://commons.wikimedia.org/wiki/File:Calle_de_San_Justo_in_Old_san_juan.jpg" target="_blank" rel="noopener">Calle de San Justo in Old san juan.jpg</a><span class="by">Chad fitz, 2009, SAMSUNG TL100, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#575C68"></span><a href="https://commons.wikimedia.org/wiki/File:CalleenSanJuan.JPG" target="_blank" rel="noopener">CalleenSanJuan.JPG</a><span class="by">Clueder, 2006, NIKON E4600, Public domain</span></li><li><span class="dot" style="--c:#5F6F86"></span><a href="https://commons.wikimedia.org/wiki/File:La_Fortaleza_St._Old_San_Juan.jpg" target="_blank" rel="noopener">La Fortaleza St. Old San Juan.jpg</a><span class="by">Jim Grossman, 2013, SONY ILCE-3000, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#7F7F89"></span><a href="https://commons.wikimedia.org/wiki/File:La_Fortaleza_Street.JPG" target="_blank" rel="noopener">La Fortaleza Street.JPG</a><span class="by">User:Mtmelendez, 2007, FUJIFILM FinePix A345, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#727A7E"></span><a href="https://commons.wikimedia.org/wiki/File:San_Juan,_calles_5.jpg" target="_blank" rel="noopener">San Juan, calles 5.jpg</a><span class="by">LBM1948, 2013, NIKON CORPORATION NIKON D300, CC BY-SA 4.0</span></li></ol>
+    </details>
+  </div>
+</article>
+<article class="card rcard" id="rojo-flamboyan">
+  <div class="swatch" style="--c:#D32E1D;--ink:#fff"><span class="swatch-hex">#D32E1D</span></div>
+  <div class="info">
+    <h2>Rojo flamboyán</h2>
+    <p class="sub">Median of 15 photos of the red petals of the flamboyán flower.</p>
+    <p class="verdict"><span class="badge v-shift">shifted</span> <span class="strength">15 photos, one per photographer</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#DF3019" title="Acacia roja - Flamboyant (Delonix regia) - Flor (14343660050).jpg"></span><span class="ps" style="--c:#C92A0E" title="Delonix Regia Flamboyant.jpg"></span><span class="ps" style="--c:#A71309" title="Delonix regia01.JPG"></span><span class="ps" style="--c:#CE281B" title="Delonix regia (14355974026).jpg"></span><span class="ps" style="--c:#BE1804" title="Delonix regia (437668677).jpg"></span><span class="ps" style="--c:#EE3637" title="Delonix regia (Gulmohar) at Wayanad 01.jpg"></span><span class="ps" style="--c:#E86356" title="Delonix regia (Gulmohar) flowers closeup 1.jpg"></span><span class="ps" style="--c:#BF1F1B" title="Delonix regia (Taiwan).jpg"></span><span class="ps" style="--c:#CF3632" title="Delonix regia 4226.jpg"></span><span class="ps" style="--c:#DA2919" title="Delonix regia 5Dsr 6862.jpg"></span><span class="ps" style="--c:#D54122" title="Delonix regia at Giza Zoo by Hatem Moushir 1.JPG"></span><span class="ps" style="--c:#DC0502" title="Delonix regia flower Navarre St 7th Brigade Park Chermside P1200712.jpg"></span><span class="ps" style="--c:#EA3733" title="FLOWERS 4 (7163741817).jpg"></span><span class="ps" style="--c:#F63015" title="Flamboyant detalhe.jpg"></span><span class="ps" style="--c:#CF2219" title="Flame of forests.jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, measured from photos</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#D32E1D" title="Copy">#D32E1D</button></td><td class="note">median of 15 photos</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(211, 46, 29)" title="Copy">rgb(211, 46, 29)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(6, 76%, 47%)" title="Copy">hsl(6, 76%, 47%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(6, 86%, 83%)" title="Copy">6°, 86%, 83%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(47.7% 63.0 51.4)" title="Copy">lab(47.7% 63.0 51.4)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(47.7% 81.3 39.2)" title="Copy">lch(47.7% 81.3 39.2)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(56.6% 0.203 30.2)" title="Copy">oklch(56.6% 0.203 30.2)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(11%, 96%, 100%, 2%)" title="Copy">C11 M96 Y100 K2</button></td><td class="note"><span class="warn">ΔE 2.2, outside the press gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(9%, 94%, 98%, 2%)" title="Copy">C9 M94 Y98 K2</button></td><td class="note"><span class="ok">ΔE 0.2, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(0%, 78%, 86%, 17%)" title="Copy">C0 M78 Y86 K17</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#AB5321"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#AB5321</code><small>ΔE 11.1 from the photos. Ad vs real: shifted.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#AB5321" title="Copy">#AB5321</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(171, 83, 33)" title="Copy">rgb(171, 83, 33)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(22, 68%, 40%)" title="Copy">hsl(22, 68%, 40%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(46.1% 34.6 44.8)" title="Copy">lab(46.1% 34.6 44.8)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(54.3% 0.131 46.8)" title="Copy">oklch(54.3% 0.131 46.8)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(24%, 75%, 100%, 14%)" title="Copy">C24 M75 Y100 K14</button> <small class="ok">ΔE 0.8</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Rojo flamboyán" width="480" height="360" loading="lazy"><figcaption>Frame at 34.3 s. Scene 34.15 to 35.45 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 15 photos</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#DF3019"></span><a href="https://commons.wikimedia.org/wiki/File:Acacia_roja_-_Flamboyant_(Delonix_regia)_-_Flor_(14343660050).jpg" target="_blank" rel="noopener">Acacia roja - Flamboyant (Delonix regia) - Flor (14343660050).jpg</a><span class="by">Alejandro  Bayer Tamayo, 2014, Panasonic DMC-FZ70, CC BY-SA 2.0</span></li><li><span class="dot" style="--c:#C92A0E"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_Regia_Flamboyant.jpg" target="_blank" rel="noopener">Delonix Regia Flamboyant.jpg</a><span class="by">Christian Pirkl, 2009, Canon EOS 50D, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#A71309"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia01.JPG" target="_blank" rel="noopener">Delonix regia01.JPG</a><span class="by">Meneerke bloem, 2006, NIKON CORPORATION NIKON D100 , CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#CE281B"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_(14355974026).jpg" target="_blank" rel="noopener">Delonix regia (14355974026).jpg</a><span class="by">Charles Lam, 2014, FUJIFILM FinePix HS50EXR, CC BY-SA 2.0</span></li><li><span class="dot" style="--c:#BE1804"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_(437668677).jpg" target="_blank" rel="noopener">Delonix regia (437668677).jpg</a><span class="by">Dinesh Valke, 2007, Panasonic DMC-FZ7, CC BY-SA 2.0</span></li><li><span class="dot" style="--c:#EE3637"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_(Gulmohar)_at_Wayanad_01.jpg" target="_blank" rel="noopener">Delonix regia (Gulmohar) at Wayanad 01.jpg</a><span class="by">Praveenp, 2015, Canon EOS 1200D, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#E86356"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_(Gulmohar)_flowers_closeup_1.jpg" target="_blank" rel="noopener">Delonix regia (Gulmohar) flowers closeup 1.jpg</a><span class="by">Prateek Karandikar, 2009, OLYMPUS IMAGING CORP.   SP570UZ                , CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#BF1F1B"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_(Taiwan).jpg" target="_blank" rel="noopener">Delonix regia (Taiwan).jpg</a><span class="by">Mk2010, 2013, Canon PowerShot SX260 HS, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#CF3632"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_4226.jpg" target="_blank" rel="noopener">Delonix regia 4226.jpg</a><span class="by">Anna Anichkova, 2009, Canon EOS 400D DIGITAL, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#DA2919"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_5Dsr_6862.jpg" target="_blank" rel="noopener">Delonix regia 5Dsr 6862.jpg</a><span class="by">SAplants, 2018, Canon EOS 5DS R, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#D54122"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_at_Giza_Zoo_by_Hatem_Moushir_1.JPG" target="_blank" rel="noopener">Delonix regia at Giza Zoo by Hatem Moushir 1.JPG</a><span class="by">Hatem Moushir, 2014, NIKON CORPORATION NIKON D5100, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#DC0502"></span><a href="https://commons.wikimedia.org/wiki/File:Delonix_regia_flower_Navarre_St_7th_Brigade_Park_Chermside_P1200712.jpg" target="_blank" rel="noopener">Delonix regia flower Navarre St 7th Brigade Park Chermside P1200712.jpg</a><span class="by">John Robert McPherson, 2011, Panasonic DMC-FZ35, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#EA3733"></span><a href="https://commons.wikimedia.org/wiki/File:FLOWERS_4_(7163741817).jpg" target="_blank" rel="noopener">FLOWERS 4 (7163741817).jpg</a><span class="by">cuatrok77, 2012, Canon EOS REBEL T2i, CC BY 2.0</span></li><li><span class="dot" style="--c:#F63015"></span><a href="https://commons.wikimedia.org/wiki/File:Flamboyant_detalhe.jpg" target="_blank" rel="noopener">Flamboyant detalhe.jpg</a><span class="by">Jonathan Wilkins, 2006, Canon EOS 5D, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#CF2219"></span><a href="https://commons.wikimedia.org/wiki/File:Flame_of_forests.jpg" target="_blank" rel="noopener">Flame of forests.jpg</a><span class="by">Challiyan at Malayalam Wikipedia, 2007, SONY DSC-T20, CC BY-SA 2.5</span></li></ol>
+    </details>
+  </div>
+</article>
+<article class="card rcard" id="turquesa-mar-caribe">
+  <div class="swatch" style="--c:#5A9797;--ink:#fff"><span class="swatch-hex">#5A9797</span></div>
+  <div class="info">
+    <h2>Turquesa mar Caribe</h2>
+    <p class="sub">Median of 9 photos of shallow Caribbean water over sand, at Puerto Rico beaches.</p>
+    <p class="verdict"><span class="badge v-edge">at the edge</span> <span class="strength">9 photos, one per photographer</span></p>
+    <div class="pstrip" aria-label="The color measured in each photo"><span class="ps" style="--c:#5B9794" title="Blue beach Vieques.jpg"></span><span class="ps" style="--c:#7CB8BE" title="Culebra, Puerto Rico - panoramio (1).jpg"></span><span class="ps" style="--c:#5A9085" title="Flamenco beach.jpg"></span><span class="ps" style="--c:#3E909E" title="Flickr - ggallice - Culebra (1).jpg"></span><span class="ps" style="--c:#399692" title="Isle of Icacos II.jpg"></span><span class="ps" style="--c:#92C6C6" title="Mona Island, Puerto Rico.JPG"></span><span class="ps" style="--c:#81B5B7" title="Playa Escalera.jpg"></span><span class="ps" style="--c:#66B7C0" title="Playa Sardinera en Isla de Mona, Mayagüez, Puerto Rico.jpg"></span><span class="ps" style="--c:#6892A3" title="Shoreline at Esperanza, Vieques.jpg"></span></div>
+    <p class="shade-cap"><span>each square is one photo</span></p>
+  </div>
+  <div class="rbody">
+    
+    <table class="codes">
+    <tbody class="t1">
+      <tr class="tier"><th colspan="3"><span class="rank">1</span>Screen, measured from photos</th></tr>
+      <tr><th scope="row">HEX</th><td><button class="code" type="button" data-copy="#5A9797" title="Copy">#5A9797</button></td><td class="note">median of 9 photos</td></tr>
+      <tr><th scope="row">RGB</th><td><button class="code" type="button" data-copy="rgb(90, 151, 151)" title="Copy">rgb(90, 151, 151)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t2">
+      <tr class="tier"><th colspan="3"><span class="rank">2</span>Same numbers, other axes</th></tr>
+      <tr><th scope="row">HSL</th><td><button class="code" type="button" data-copy="hsl(180, 25%, 47%)" title="Copy">hsl(180, 25%, 47%)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">HSB / HSV</th><td><button class="code" type="button" data-copy="hsb(180, 40%, 59%)" title="Copy">180°, 40%, 59%</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t3">
+      <tr class="tier"><th colspan="3"><span class="rank">3</span>Device-independent</th></tr>
+      <tr><th scope="row">Lab (D50)</th><td><button class="code" type="button" data-copy="lab(58.4% -20.6 -6.6)" title="Copy">lab(58.4% -20.6 -6.6)</button></td><td class="note">for paint matching</td></tr>
+      <tr><th scope="row">LCH (D50)</th><td><button class="code" type="button" data-copy="lch(58.4% 21.6 197.7)" title="Copy">lch(58.4% 21.6 197.7)</button></td><td class="note"></td></tr>
+      <tr><th scope="row">OKLCH</th><td><button class="code" type="button" data-copy="oklch(63.5% 0.063 195.7)" title="Copy">oklch(63.5% 0.063 195.7)</button></td><td class="note"></td></tr>
+    </tbody>
+    <tbody class="t4">
+      <tr class="tier"><th colspan="3"><span class="rank">4</span>Print, depends on the press</th></tr>
+      <tr><th scope="row">CMYK SWOP v2</th><td><button class="code" type="button" data-copy="cmyk(67%, 26%, 40%, 2%)" title="Copy">C67 M26 Y40 K2</button></td><td class="note"><span class="ok">ΔE 0.4, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK GRACoL 2006</th><td><button class="code" type="button" data-copy="cmyk(66%, 24%, 38%, 4%)" title="Copy">C66 M24 Y38 K4</button></td><td class="note"><span class="ok">ΔE 0.2, in gamut</span></td></tr>
+      <tr><th scope="row">CMYK naive</th><td><button class="code" type="button" data-copy="cmyk(40%, 0%, 0%, 41%)" title="Copy">C40 M0 Y0 K41</button></td><td class="note"><span class="warn">not color-managed</span></td></tr>
+    </tbody>
+  </table>
+    <section class="alts" aria-label="Alternates">
+      <h3>Alternates</h3>
+      <div class="alt">
+        <div class="alt-head"><div class="sq" style="--c:#439BB6"></div><div><span class="alt-label">In the ad (video)</span><code class="alt-hex">#439BB6</code><small>ΔE 9.7 from the photos. Ad vs real: at the edge.</small></div></div>
+        <dl class="cc"><div><dt>HEX</dt><dd><button class="code" type="button" data-copy="#439BB6" title="Copy">#439BB6</button></dd></div><div><dt>RGB</dt><dd><button class="code" type="button" data-copy="rgb(67, 155, 182)" title="Copy">rgb(67, 155, 182)</button></dd></div><div><dt>HSL</dt><dd><button class="code" type="button" data-copy="hsl(194, 46%, 49%)" title="Copy">hsl(194, 46%, 49%)</button></dd></div><div><dt>Lab</dt><dd><button class="code" type="button" data-copy="lab(59.5% -21.0 -22.4)" title="Copy">lab(59.5% -21.0 -22.4)</button></dd></div><div><dt>OKLCH</dt><dd><button class="code" type="button" data-copy="oklch(64.7% 0.092 221.3)" title="Copy">oklch(64.7% 0.092 221.3)</button></dd></div><div><dt>CMYK SWOP</dt><dd><button class="code" type="button" data-copy="cmyk(71%, 25%, 22%, 0%)" title="Copy">C71 M25 Y22 K0</button> <small class="ok">ΔE 0.3</small></dd></div></dl>
+        <figure class="alt-frame"><img src="data:image/jpeg;base64,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" alt="Video frame of Turquesa mar Caribe" width="480" height="360" loading="lazy"><figcaption>Frame at 36.0 s. Scene 35.85 to 40.00 s, lit side of the paint.</figcaption></figure>
+      </div>
+    </section>
+    <details>
+      <summary>The 9 photos</summary>
+      <p class="rule">Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The dot is the color measured in that photo.</p>
+      <ol class="photos"><li><span class="dot" style="--c:#5B9794"></span><a href="https://commons.wikimedia.org/wiki/File:Blue_beach_Vieques.jpg" target="_blank" rel="noopener">Blue beach Vieques.jpg</a><span class="by">Karlnorling on Flickr, 2013, Apple iPhone 5, CC BY 2.0</span></li><li><span class="dot" style="--c:#7CB8BE"></span><a href="https://commons.wikimedia.org/wiki/File:Culebra,_Puerto_Rico_-_panoramio_(1).jpg" target="_blank" rel="noopener">Culebra, Puerto Rico - panoramio (1).jpg</a><span class="by">Norma Arbelo Irizarr…, 2016, Canon PowerShot SX30 IS, CC BY-SA 3.0</span></li><li><span class="dot" style="--c:#5A9085"></span><a href="https://commons.wikimedia.org/wiki/File:Flamenco_beach.jpg" target="_blank" rel="noopener">Flamenco beach.jpg</a><span class="by">Bea2017, 2014, Apple iPhone 5, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#3E909E"></span><a href="https://commons.wikimedia.org/wiki/File:Flickr_-_ggallice_-_Culebra_(1).jpg" target="_blank" rel="noopener">Flickr - ggallice - Culebra (1).jpg</a><span class="by">Geoff Gallice, 2012, NIKON CORPORATION NIKON D7000, CC BY 2.0</span></li><li><span class="dot" style="--c:#399692"></span><a href="https://commons.wikimedia.org/wiki/File:Isle_of_Icacos_II.jpg" target="_blank" rel="noopener">Isle of Icacos II.jpg</a><span class="by">Flickr user, 2010, Canon PowerShot S5 IS, CC BY 2.0</span></li><li><span class="dot" style="--c:#92C6C6"></span><a href="https://commons.wikimedia.org/wiki/File:Mona_Island,_Puerto_Rico.JPG" target="_blank" rel="noopener">Mona Island, Puerto Rico.JPG</a><span class="by">Alopiasmag at English Wikipedia, 2006, NIKON E3100, CC BY 2.5</span></li><li><span class="dot" style="--c:#81B5B7"></span><a href="https://commons.wikimedia.org/wiki/File:Playa_Escalera.jpg" target="_blank" rel="noopener">Playa Escalera.jpg</a><span class="by">Serge Aucoin, 2007, Canon PowerShot SD600, CC BY-SA 4.0</span></li><li><span class="dot" style="--c:#66B7C0"></span><a href="https://commons.wikimedia.org/wiki/File:Playa_Sardinera_en_Isla_de_Mona,_Mayagüez,_Puerto_Rico.jpg" target="_blank" rel="noopener">Playa Sardinera en Isla de Mona, Mayagüez, Puerto Rico.jpg</a><span class="by">Felix Lopez, 2013, OLYMPUS IMAGING CORP.   E-3             , CC BY 2.0</span></li><li><span class="dot" style="--c:#6892A3"></span><a href="https://commons.wikimedia.org/wiki/File:Shoreline_at_Esperanza,_Vieques.jpg" target="_blank" rel="noopener">Shoreline at Esperanza, Vieques.jpg</a><span class="by">Rar285, 2013, HTC EVO, CC BY-SA 3.0</span></li></ol>
+    </details>
+  </div>
+</article>
+  </main>
+
+  <section class="method">
+    <h2>How the values were measured</h2>
+    <ol>
+      <li><strong>Primary values.</strong> No official source publishes measured colors for these subjects, so each one was measured from real photos on Wikimedia Commons. Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. Each subject was defined before the search, and photos that did not fit were dropped, such as deep water for the turquesa. A hand-drawn box marks the subject. Inside it, pixels are kept by hue and chroma, blown-out pixels are removed, the lit side is kept (the 60th to 95th percentile of lightness) and the median is taken in CIELAB. The primary is the median across photos.</li>
+      <li><strong>Frambuesa piragua.</strong> Commons has only one usable piragua photo, so its primary is an estimate. The ad value was rotated back by 13.2° in the video's color plane, the average lean of amarillo mangó, rojo flamboyán and turquesa. Only hue changes. The one photo then serves as the check.</li>
+      <li><strong>Ad values (alternates).</strong> Decoded from the .mp4 file with the BT.709 matrix in floating point, cross-checked against the .webm file within ΔE 0.03, and sampled on the lit side of the paint in each scene.</li>
+      <li><strong>Conversions.</strong> Lab and LCH use D50 with Bradford adaptation, the same as Photoshop and CSS. CMYK uses the Adobe SWOP v2 and GRACoL 2006 profiles with relative colorimetric intent and black point compensation. ΔE is CIEDE2000.</li>
+    </ol>
+  </section>
+  <footer>Click any code to copy it. The ad's own values, with the video frames and sampling details, are in colores-de-mi-tierra.html.</footer>
+</div>
+<script>
+(function () {
+  function copyText(t) {
+    if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(t);
+    return new Promise(function (res, rej) {
+      var ta = document.createElement("textarea");
+      ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand("copy") ? res() : rej(); } catch (err) { rej(err); }
+      document.body.removeChild(ta);
+    });
+  }
+  document.addEventListener("click", function (ev) {
+    var b = ev.target.closest(".code");
+    if (!b) return;
+    copyText(b.dataset.copy).then(function () {
+      b.classList.add("copied");
+      setTimeout(function () { b.classList.remove("copied"); }, 1200);
+    }, function () {});
+  });
+})();
+</script>
+</body>
+</html>
