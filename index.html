@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Los colores de mi tierra</title>
+<meta name="description" content="The seven colors of the 1991 Harris Paints song, measured from photos of the real things they are named after.">
+<style>
+:root {
+  --bg: #f6f4f1; --panel: #ffffff; --text: #1c1b1a; --muted: #6b6661; --line: #e4e0da;
+  --code-bg: #f1eee9; --accent: #1c1b1a; color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161514; --panel: #201f1d; --text: #efebe6; --muted: #a39d96; --line: #34312e;
+    --code-bg: #2a2825; --accent: #efebe6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161514; --panel: #201f1d; --text: #efebe6; --muted: #a39d96; --line: #34312e;
+  --code-bg: #2a2825; --accent: #efebe6; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+a { color: var(--text); }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 32px 16px 64px; }
+nav.site { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 28px; font-size: 14px; }
+nav.site a { color: var(--muted); text-decoration: none; }
+nav.site a:first-child { color: var(--text); font-weight: 700; }
+nav.site a[aria-current="page"] { color: var(--text); text-decoration: underline; text-underline-offset: 4px; }
+nav.site a:hover { color: var(--text); }
+footer { margin-top: 48px; font-size: 13px; color: var(--muted); }
+
+header h1 { font-size: clamp(34px, 6vw, 60px); line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 14px; }
+.lede { font-size: 18px; color: var(--muted); max-width: 62ch; margin: 0; }
+.palette { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); margin: 32px 0 0; border-radius: 14px; overflow: hidden; }
+.sw { background: var(--c); color: var(--ink); min-height: 220px; padding: 12px; display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; }
+.sw b { font-size: 13px; line-height: 1.25; }
+.sw code { font-size: 12px; opacity: 0.85; }
+.sw small { font-size: 11px; opacity: 0.8; }
+.cap { font-size: 13px; color: var(--muted); margin: 8px 0 0; }
+.links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 40px 0 0; }
+.card { display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; text-decoration: none; color: var(--text); }
+.card:hover { border-color: var(--muted); }
+.card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.card h2 { font-size: 19px; margin: 0 0 6px; }
+.card h2::after { content: "  \2192"; color: var(--muted); }
+.card p { margin: 0; color: var(--muted); font-size: 14px; }
+.card.main { border-width: 2px; border-color: var(--accent); }
+section { margin: 44px 0 0; max-width: 78ch; }
+section h2 { font-size: 22px; margin: 0 0 10px; }
+section li { margin: 8px 0; }
+section p { color: var(--muted); }
+.watch { display: inline-block; margin-top: 4px; font-weight: 600; }
+@media (max-width: 760px) {
+  .palette { display: flex; flex-wrap: wrap; }
+  .sw { flex: 1 0 25%; min-height: 130px; }
+  .links { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <nav class="site" aria-label="Site">
+      <a href="index.html">Los colores de mi tierra</a>
+      <a href="colores-de-mi-tierra-reales.html">The colors</a>
+      <a href="colores-de-mi-tierra.html">As the ad recorded them</a>
+      <a href="summary.html">How it was built</a>
+    </nav>
+
+  <header>
+    <h1>Los colores de mi tierra</h1>
+    <p class="lede">In 1991, Harris Paints ran an ad before the movies in Puerto Rico with a song that names seven colors of the island. This project gives each color a full set of codes, measured from photos of the real thing it is named after, and compares it with the paint as the ad showed it.</p>
+  </header>
+
+  <nav class="palette" aria-label="The seven colors"><a class="sw" href="colores-de-mi-tierra-reales.html#frambuesa-piragua" style="--c:#C03621;--ink:#fff"><b>Frambuesa piragua</b><code>#C03621</code><small>estimate</small></a><a class="sw" href="colores-de-mi-tierra-reales.html#blanco-coco" style="--c:#DDDFE0;--ink:#111"><b>Blanco coco</b><code>#DDDFE0</code><small>weak</small></a><a class="sw" href="colores-de-mi-tierra-reales.html#amarillo-mango" style="--c:#DEA71E;--ink:#111"><b>Amarillo mangó</b><code>#DEA71E</code></a><a class="sw" href="colores-de-mi-tierra-reales.html#verde-quenepa" style="--c:#708839;--ink:#111"><b>Verde quenepa</b><code>#708839</code><small>indicative</small></a><a class="sw" href="colores-de-mi-tierra-reales.html#azul-adoquines" style="--c:#6F7781;--ink:#111"><b>Azul adoquines</b><code>#6F7781</code><small>weak</small></a><a class="sw" href="colores-de-mi-tierra-reales.html#rojo-flamboyan" style="--c:#D32E1D;--ink:#fff"><b>Rojo flamboyán</b><code>#D32E1D</code></a><a class="sw" href="colores-de-mi-tierra-reales.html#turquesa-mar-caribe" style="--c:#5A9797;--ink:#111"><b>Turquesa mar Caribe</b><code>#5A9797</code></a></nav>
+  <p class="cap">The seven colors, measured from photos of the real things. Select one to see all its codes.</p>
+
+  <div class="links">
+    <a class="card main" href="colores-de-mi-tierra-reales.html">
+      <h2>The colors</h2>
+      <p>Each color measured from photos of the real thing, with HEX, RGB, HSL, Lab, OKLCH and CMYK codes. The ad's own value is kept on each card as an alternate.</p>
+    </a>
+    <a class="card" href="colores-de-mi-tierra.html">
+      <h2>As the ad recorded them</h2>
+      <p>The same seven colors sampled from the ad's video frames, with the frame each one came from and how it compares with the real thing.</p>
+    </a>
+    <a class="card" href="summary.html">
+      <h2>How it was built</h2>
+      <p>Sources, methods, findings and limits, with every final value in one document.</p>
+    </a>
+  </div>
+
+  <section>
+    <h2>What we found</h2>
+    <ul>
+      <li>Every color in the ad leans the same way in hue, by about 13° on average. The reds read orange, the yellow a little greener, and the green and the turquesa bluer.</li>
+      <li>The ad's whites and blacks stay neutral, so the video has no overall color cast. A tint error in the 1991 tape transfer would fit this pattern, but the data can't prove it.</li>
+      <li>Wikimedia Commons has only one usable photo of a frambuesa piragua, so that color is an estimate. It is the ad's value with the average lean removed, and it lands within ΔE 2.5 of that one photo.</li>
+      <li>Blanco coco and azul adoquines are nearly gray, so camera white balance decides most of their values. Verde quenepa rests on photos from 3 photographers.</li>
+    </ul>
+    <a class="watch" href="https://www.youtube.com/watch?v=6O6Xl9RFoJs" target="_blank" rel="noopener">Watch the ad on YouTube</a>
+  </section>
+
+  <section>
+    <h2>Credits</h2>
+    <p>The ad and the song belong to Harris Paints. Orlando Lagomarsino wrote the lyrics, Alberto Carrión wrote the music, and Darvel García sang it. The reference photos come from Wikimedia Commons. These pages show only the colors measured from them, and each card links every photo with its photographer and license. The small video stills show where each sample in the ad came from.</p>
+  </section>
+
+  <footer>Built from the 1991 ad and photos on Wikimedia Commons. Values as of 2026-09-28.</footer>
+
+</div>
+</body>
+</html>

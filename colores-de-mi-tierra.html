@@ -323,6 +323,11 @@ section.method { margin-top: 48px; max-width: 78ch; }
 .method ol { padding-left: 20px; margin: 0; }
 .method li { margin: 6px 0; color: var(--muted); }
 .method li strong { color: var(--text); font-weight: 600; }
+nav.site { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 28px; font-size: 14px; }
+nav.site a { color: var(--muted); text-decoration: none; }
+nav.site a:first-child { color: var(--text); font-weight: 700; }
+nav.site a[aria-current="page"] { color: var(--text); text-decoration: underline; text-underline-offset: 4px; }
+nav.site a:hover { color: var(--text); }
 footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
 @media (max-width: 900px) {
   section.explain { grid-template-columns: repeat(2, 1fr); }
@@ -369,6 +374,12 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
 <body>
 <div class="wrap">
   <header>
+    <nav class="site" aria-label="Site">
+      <a href="index.html">Los colores de mi tierra</a>
+      <a href="colores-de-mi-tierra-reales.html">The colors</a>
+      <a href="colores-de-mi-tierra.html" aria-current="page">As the ad recorded them</a>
+      <a href="summary.html">How it was built</a>
+    </nav>
     <h1>Los colores de mi tierra</h1>
     <p>Harris Paints, 1991. The seven paint colors the song names, sampled from the video frames of the ad, with every code derived from one master value per color.</p>
   </header>
@@ -480,7 +491,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Frambuesa piragua</h2>
-    <p class="sub">From your screenshot <code>frambuesa-piragua.jpeg</code></p>
+    <p class="sub">Sampled from the scene at 16.6 to 18.9 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#942B00;--ink:#fff" title="Darker end #942B00"><span>#942B00</span></div>
       <div style="--c:#B43C05;--ink:#fff" class="mid" title="Chosen value #B43C05"><span>#B43C05</span></div>
@@ -577,7 +588,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Blanco coco</h2>
-    <p class="sub">From your screenshot <code>blanco-coco.png</code></p>
+    <p class="sub">Sampled from the scene at 19.2 to 20.6 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#C0BDB9;--ink:#111" title="Darker end #C0BDB9"><span>#C0BDB9</span></div>
       <div style="--c:#EBE7E8;--ink:#111" class="mid" title="Chosen value #EBE7E8"><span>#EBE7E8</span></div>
@@ -674,7 +685,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Amarillo mangó</h2>
-    <p class="sub">No screenshot. Sampled from the scene at 22.9 to 26.0 s</p>
+    <p class="sub">Sampled from the scene at 22.9 to 26.0 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#BAA440;--ink:#111" title="Darker end #BAA440"><span>#BAA440</span></div>
       <div style="--c:#E7CA5B;--ink:#111" class="mid" title="Chosen value #E7CA5B"><span>#E7CA5B</span></div>
@@ -771,7 +782,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Verde quenepa</h2>
-    <p class="sub">From your screenshot <code>verde-quenepa.jpeg</code></p>
+    <p class="sub">Sampled from the scene at 27.5 to 30.8 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#437948;--ink:#fff" title="Darker end #437948"><span>#437948</span></div>
       <div style="--c:#5F9F69;--ink:#111" class="mid" title="Chosen value #5F9F69"><span>#5F9F69</span></div>
@@ -868,7 +879,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Azul adoquines</h2>
-    <p class="sub">From your screenshot <code>azul-adoquines.jpeg</code></p>
+    <p class="sub">Sampled from the scene at 31.2 to 33.4 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#5A6373;--ink:#fff" title="Darker end #5A6373"><span>#5A6373</span></div>
       <div style="--c:#6A7585;--ink:#fff" class="mid" title="Chosen value #6A7585"><span>#6A7585</span></div>
@@ -965,7 +976,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Rojo flamboyán</h2>
-    <p class="sub">From your screenshot <code>rojo-flamboyan.png</code></p>
+    <p class="sub">Sampled from the scene at 34.1 to 35.5 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#873C15;--ink:#fff" title="Darker end #873C15"><span>#873C15</span></div>
       <div style="--c:#AB5321;--ink:#fff" class="mid" title="Chosen value #AB5321"><span>#AB5321</span></div>
@@ -1062,7 +1073,7 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
   </div>
   <div class="info">
     <h2>Turquesa mar Caribe</h2>
-    <p class="sub">From your screenshot <code>turquesa-mar_caribe.jpeg</code></p>
+    <p class="sub">Sampled from the scene at 35.9 to 40.0 s</p>
     <div class="shades" aria-label="How the paint reads across the sampled range">
       <div style="--c:#226579;--ink:#fff" title="Darker end #226579"><span>#226579</span></div>
       <div style="--c:#439BB6;--ink:#fff" class="mid" title="Chosen value #439BB6"><span>#439BB6</span></div>
@@ -1159,10 +1170,10 @@ footer { margin-top: 40px; font-size: 12px; color: var(--muted); }
     <h2>How the values were measured</h2>
     <ol>
       <li><strong>Source.</strong> The .mp4 file (H.264, 1920×1440, BT.709, limited range). The .webm file (VP9) went through the same steps as a cross-check, and the two agree within ΔE 0.03 for every color.</li>
-      <li><strong>Scenes.</strong> ffmpeg scene detection found the cuts. About 5 frames were dropped at each cut, and every second frame in between was used. Turquesa uses the two splash shots from 35.9 to 40.0 s, which include your screenshot. The pouring shot after them is lit brighter and was left out.</li>
+      <li><strong>Scenes.</strong> ffmpeg scene detection found the cuts. About 5 frames were dropped at each cut, and every second frame in between was used. Turquesa uses the two splash shots from 35.9 to 40.0 s. The pouring shot after them is lit brighter and was left out.</li>
       <li><strong>Decoding.</strong> Raw Y'CbCr planes were converted to R'G'B' in floating point with the BT.709 matrix. The result matches ffmpeg's own conversion within 0.5 of a code value. The screenshots were only used to find the scenes, because they pass through the player's color management and JPEG compression.</li>
       <li><strong>Paint pixels.</strong> Pixels were kept when their hue and chroma matched the paint (by lightness alone for the white). The mask was shrunk by a few pixels so edges that blend into the background drop out, and clipped highlights were removed.</li>
-      <li><strong>The value.</strong> Only the 60th to 95th percentile of lightness was kept, for every color. That keeps the lit side of the paint and drops the shadow side and the gloss highlights. The chosen value is the median of what remains, taken in CIELAB. The band was picked by comparing candidates against lit patches in your screenshots.</li>
+      <li><strong>The value.</strong> Only the 60th to 95th percentile of lightness was kept, for every color. That keeps the lit side of the paint and drops the shadow side and the gloss highlights. The chosen value is the median of what remains, taken in CIELAB. The band was picked by comparing candidates against lit patches in screenshots of each scene.</li>
       <li><strong>The real things.</strong> No official source publishes measured colors for these subjects. For the flamboyán, the Floral Reflectance Database has no entry, no Royal Horticultural Society chart code turned up, and the pigment studies measure extracts, not petals. So each subject was measured from real photos on Wikimedia Commons. Each photo has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. A hand-drawn box marks the subject, and inside it the same hue and chroma mask, lit band and Lab median as the video apply. Each subject was defined before the search, and photos that did not fit were dropped, such as deep water for the turquesa. For the flamboyán, using only the 8 photos with the fewest blown-out pixels gives a value within ΔE 2.5.</li>
       <li><strong>Conversions.</strong> Lab and LCH use D50 with Bradford adaptation, the same as Photoshop and CSS. CMYK uses the Adobe SWOP v2 and GRACoL 2006 profiles with relative colorimetric intent and black point compensation. ΔE is CIEDE2000 after a round trip through the profile.</li>
     </ol>

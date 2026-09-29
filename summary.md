@@ -4,12 +4,14 @@ Final results as of 2026-09-28. This file covers what the two HTML pages contain
 
 ## Output files
 
-All files are in this folder.
+All files are in this repository.
 
+- `index.html` is the start page. It links to everything else.
 - `colores-de-mi-tierra-reales.html` is the main result. Each card leads with the color measured from photos of the real thing the song names, with every code. The ad's own value is an alternate on each card.
 - `colores-de-mi-tierra.html` shows the colors as the 1991 ad recorded them. Each card has every code, the video frame the color came from, and a comparison with the real thing.
+- `summary.md` is this summary, and `summary.html` is the same text as a web page.
 
-Both pages work offline, have light and dark themes, and copy any code when you click it.
+The pages work offline, have light and dark themes, and copy any code when you click it.
 
 ## The seven colors
 
@@ -71,9 +73,9 @@ These are the primary colors in `colores-de-mi-tierra.html` and the alternates i
 
 ## How the ad values were measured
 
-- **Source.** The .mp4 file (H.264, 1920×1440, BT.709, limited range, 61 s). The .webm file (VP9) went through the same steps and agrees within ΔE 0.03 for every color. The screenshots served only to find the scenes, because they pass through the player's color management and JPEG compression.
+- **Source.** The .mp4 file (H.264, 1920×1440, BT.709, limited range, 61 s). The .webm file (VP9) went through the same steps and agrees within ΔE 0.03 for every color. Screenshots of each scene served only to find the scenes, because they pass through the player's color management and JPEG compression.
 - **Decoding.** Raw Y'CbCr frames were converted to R'G'B' in floating point with the BT.709 matrix. The result matches ffmpeg's own conversion within 0.5 of a code value. BT.709 has the same primaries and white point as sRGB, so the decoded values are sRGB values.
-- **Scenes.** ffmpeg scene detection found the cuts. About 5 frames were dropped at each cut, and every second frame in between was used. Turquesa uses the two splash shots, which include the screenshot.
+- **Scenes.** ffmpeg scene detection found the cuts. About 5 frames were dropped at each cut, and every second frame in between was used. Turquesa uses the two splash shots, from 35.85 to 40.00 s.
 - **Paint pixels.** Pixels were kept when their hue and chroma matched the paint, or by lightness alone for the white. The mask was shrunk so edges that blend into the background drop out, and clipped highlights were removed.
 - **The value.** Only the 60th to 95th percentile of lightness was kept. That keeps the lit side of the paint and drops the shadow side and the gloss highlights. The value is the median of what remains, in CIELAB.
 
@@ -148,13 +150,13 @@ Most colors print within ΔE 1.1. The exceptions are the ad's frambuesa (ΔE 5.7
 
 ## Sources
 
-- Video: `Harris Paints - Los Colores de mi Tierra (1991) [6O6Xl9RFoJs]`, .mp4 and .webm, in this folder.
+- Video: [Harris Paints - Los Colores de mi Tierra (1991)](https://www.youtube.com/watch?v=6O6Xl9RFoJs) on YouTube. The measurements used a downloaded copy in .mp4 and .webm.
 - Song lyrics and credits: [Speaking Latino](https://www.speakinglatino.com/a-commercial-from-puerto-rico-will-teach-you-the-colors-in-spanish/)
 - Photos: [Wikimedia Commons](https://commons.wikimedia.org/). Every photo is linked, with photographer, year, camera and license, on its card in both pages.
 - [FReD, Floral Reflectance Database](http://www.reflectance.co.uk/)
 - [Delonix regia pigment study (PMC10096959)](https://pmc.ncbi.nlm.nih.gov/articles/PMC10096959/)
 - [Food and Humanity 2026, DOI 10.1016/j.foohum.2026.101133](https://doi.org/10.1016/j.foohum.2026.101133)
 - [Harris Paints](https://www.harrispaints.com/en)
-- CMYK profiles: Adobe U.S. Web Coated (SWOP) v2 and Coated GRACoL 2006, installed on this Mac.
+- CMYK profiles: Adobe U.S. Web Coated (SWOP) v2 and Coated GRACoL 2006, from Adobe's standard profile set.
 
-The measurement scripts and downloaded photos lived in a temporary session folder and are not part of this project. Both HTML pages hold every final value, and the exported conversation is in `2026-09-28-084213-i-have-here-a-video-from-an-older-theater-trailer.txt`.
+The measurement scripts are not part of this repository. The HTML pages hold every final value.

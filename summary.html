@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How it was built</title>
+<meta name="description" content="Sources, methods, findings and limits behind the Los colores de mi tierra color pages.">
+<style>
+:root {
+  --bg: #f6f4f1; --panel: #ffffff; --text: #1c1b1a; --muted: #6b6661; --line: #e4e0da;
+  --code-bg: #f1eee9; --accent: #1c1b1a; color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #161514; --panel: #201f1d; --text: #efebe6; --muted: #a39d96; --line: #34312e;
+    --code-bg: #2a2825; --accent: #efebe6; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #161514; --panel: #201f1d; --text: #efebe6; --muted: #a39d96; --line: #34312e;
+  --code-bg: #2a2825; --accent: #efebe6; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--bg); color: var(--text);
+  font: 16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+code { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 0.9em; }
+a { color: var(--text); }
+.wrap { max-width: 1060px; margin: 0 auto; padding: 32px 16px 64px; }
+nav.site { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 0 0 28px; font-size: 14px; }
+nav.site a { color: var(--muted); text-decoration: none; }
+nav.site a:first-child { color: var(--text); font-weight: 700; }
+nav.site a[aria-current="page"] { color: var(--text); text-decoration: underline; text-underline-offset: 4px; }
+nav.site a:hover { color: var(--text); }
+footer { margin-top: 48px; font-size: 13px; color: var(--muted); }
+
+.doc { max-width: 1000px; }
+.doc h1 { font-size: clamp(30px, 5vw, 44px); line-height: 1.08; letter-spacing: -0.02em; margin: 0 0 12px; }
+.doc h2 { font-size: 24px; margin: 44px 0 12px; padding-top: 16px; border-top: 1px solid var(--line); }
+.doc h3 { font-size: 18px; margin: 28px 0 8px; }
+.doc p, .doc li { max-width: 78ch; }
+.doc li { margin: 6px 0; }
+.table-wrap { overflow-x: auto; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; margin: 14px 0; }
+.doc table { border-collapse: collapse; font-size: 13.5px; width: 100%; }
+.doc th, .doc td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.doc thead th { font-size: 12px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+.doc tbody tr:last-child td { border-bottom: 0; }
+.doc td { white-space: nowrap; }
+.doc td:last-child { white-space: normal; min-width: 220px; }
+.doc td:first-child { font-weight: 600; }
+.doc code { background: var(--code-bg); padding: 1px 5px; border-radius: 5px; }
+.doc code.hex { white-space: nowrap; }
+.chip { display: inline-block; width: 11px; height: 11px; border-radius: 3px; background: var(--c); margin-right: 5px; vertical-align: -1px; box-shadow: inset 0 0 0 1px rgba(0,0,0,0.12); }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <nav class="site" aria-label="Site">
+      <a href="index.html">Los colores de mi tierra</a>
+      <a href="colores-de-mi-tierra-reales.html">The colors</a>
+      <a href="colores-de-mi-tierra.html">As the ad recorded them</a>
+      <a href="summary.html" aria-current="page">How it was built</a>
+    </nav>
+<main class="doc"><h1>Los colores de mi tierra, color summary</h1>
+<p>Final results as of 2026-09-28. This file covers what the two HTML pages contain, where each value comes from, and how far to trust it.</p>
+<h2>Output files</h2>
+<p>All files are in this repository.</p>
+<ul>
+<li><code>index.html</code> is the start page. It links to everything else.</li>
+<li><code>colores-de-mi-tierra-reales.html</code> is the main result. Each card leads with the color measured from photos of the real thing the song names, with every code. The ad's own value is an alternate on each card.</li>
+<li><code>colores-de-mi-tierra.html</code> shows the colors as the 1991 ad recorded them. Each card has every code, the video frame the color came from, and a comparison with the real thing.</li>
+<li><code>summary.md</code> is this summary, and <code>summary.html</code> is the same text as a web page.</li>
+</ul>
+<p>The pages work offline, have light and dark themes, and copy any code when you click it.</p>
+<h2>The seven colors</h2>
+<p>The Harris Paints song "Los colores de mi tierra" (1991) names seven colors. Orlando Lagomarsino wrote the lyrics, Alberto Carrión wrote the music, and Darvel García sang it. Each color was measured against the real thing it is named after.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Line in the song</th>
+<th>Real thing measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frambuesa piragua</td>
+<td>"frambuesa piragua"</td>
+<td>the raspberry-syrup ice of a piragua in Puerto Rico</td>
+</tr>
+<tr>
+<td>Blanco coco</td>
+<td>"blanco como el coco"</td>
+<td>the white flesh of an opened coconut</td>
+</tr>
+<tr>
+<td>Amarillo mangó</td>
+<td>"amarillo mangó"</td>
+<td>the cut flesh of a ripe mango</td>
+</tr>
+<tr>
+<td>Verde quenepa</td>
+<td>"verde quenepa"</td>
+<td>the green skin of the quenepa fruit</td>
+</tr>
+<tr>
+<td>Azul adoquines</td>
+<td>"azul de adoquines"</td>
+<td>the dry blue cobblestones of Old San Juan, in daylight</td>
+</tr>
+<tr>
+<td>Rojo flamboyán</td>
+<td>"rojo flamboyán"</td>
+<td>the red petals of the flamboyán flower</td>
+</tr>
+<tr>
+<td>Turquesa mar Caribe</td>
+<td>"turquesa del mar"</td>
+<td>shallow Caribbean water over sand, at Puerto Rico beaches</td>
+</tr>
+</tbody>
+</table></div>
+<p>The ad also shows a tan, a periwinkle blue and the orange of the HARRIS logo. The song does not name them, so they were not measured.</p>
+<h2>Primary values, from the real things</h2>
+<p>These are the primary colors in <code>colores-de-mi-tierra-reales.html</code>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>HEX</th>
+<th>RGB</th>
+<th>HSL</th>
+<th>Lab (D50)</th>
+<th>OKLCH</th>
+<th>CMYK SWOP v2</th>
+<th>CMYK GRACoL 2006</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frambuesa piragua</td>
+<td><code class="hex"><span class="chip" style="--c:#C03621"></span>#C03621</code></td>
+<td>rgb(192, 54, 33)</td>
+<td>hsl(8, 71%, 44%)</td>
+<td>lab(44.9% 54.8 45.4)</td>
+<td>oklch(53.9% 0.178 31.6)</td>
+<td>C17 M92 Y100 K7 (ΔE 1.0)</td>
+<td>C16 M91 Y97 K6 (ΔE 0.2)</td>
+</tr>
+<tr>
+<td>Blanco coco</td>
+<td><code class="hex"><span class="chip" style="--c:#DDDFE0"></span>#DDDFE0</code></td>
+<td>rgb(221, 223, 224)</td>
+<td>hsl(200, 5%, 87%)</td>
+<td>lab(88.7% -0.6 -0.7)</td>
+<td>oklch(90.2% 0.003 230.3)</td>
+<td>C11 M9 Y9 K0 (ΔE 1.1)</td>
+<td>C13 M9 Y10 K0 (ΔE 1.1)</td>
+</tr>
+<tr>
+<td>Amarillo mangó</td>
+<td><code class="hex"><span class="chip" style="--c:#DEA71E"></span>#DEA71E</code></td>
+<td>rgb(222, 167, 30)</td>
+<td>hsl(43, 76%, 49%)</td>
+<td>lab(72.2% 12.9 70.1)</td>
+<td>oklch(76.0% 0.150 83.5)</td>
+<td>C13 M35 Y100 K0 (ΔE 0.7)</td>
+<td>C12 M35 Y96 K2 (ΔE 0.4)</td>
+</tr>
+<tr>
+<td>Verde quenepa</td>
+<td><code class="hex"><span class="chip" style="--c:#708839"></span>#708839</code></td>
+<td>rgb(112, 136, 57)</td>
+<td>hsl(78, 41%, 38%)</td>
+<td>lab(53.5% -18.5 38.5)</td>
+<td>oklch(59.0% 0.109 123.9)</td>
+<td>C59 M30 Y99 K11 (ΔE 0.5)</td>
+<td>C58 M29 Y94 K12 (ΔE 0.3)</td>
+</tr>
+<tr>
+<td>Azul adoquines</td>
+<td><code class="hex"><span class="chip" style="--c:#6F7781"></span>#6F7781</code></td>
+<td>rgb(111, 119, 129)</td>
+<td>hsl(213, 7%, 47%)</td>
+<td>lab(49.6% -1.5 -6.6)</td>
+<td>oklch(56.6% 0.018 254.1)</td>
+<td>C59 M47 Y40 K9 (ΔE 1.0)</td>
+<td>C57 M44 Y37 K15 (ΔE 1.0)</td>
+</tr>
+<tr>
+<td>Rojo flamboyán</td>
+<td><code class="hex"><span class="chip" style="--c:#D32E1D"></span>#D32E1D</code></td>
+<td>rgb(211, 46, 29)</td>
+<td>hsl(6, 76%, 47%)</td>
+<td>lab(47.7% 63.0 51.4)</td>
+<td>oklch(56.6% 0.203 30.2)</td>
+<td>C11 M96 Y100 K2 (ΔE 2.2)</td>
+<td>C9 M94 Y98 K2 (ΔE 0.2)</td>
+</tr>
+<tr>
+<td>Turquesa mar Caribe</td>
+<td><code class="hex"><span class="chip" style="--c:#5A9797"></span>#5A9797</code></td>
+<td>rgb(90, 151, 151)</td>
+<td>hsl(180, 25%, 47%)</td>
+<td>lab(58.4% -20.6 -6.6)</td>
+<td>oklch(63.5% 0.063 195.7)</td>
+<td>C67 M26 Y40 K2 (ΔE 0.4)</td>
+<td>C66 M24 Y38 K4 (ΔE 0.2)</td>
+</tr>
+</tbody>
+</table></div>
+<p>How much each value rests on:</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Based on</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frambuesa piragua</td>
+<td>the ad value with the average hue lean removed, checked against 1 photo</td>
+<td>estimate</td>
+</tr>
+<tr>
+<td>Blanco coco</td>
+<td>median of 7 photos</td>
+<td>weak, because the color is nearly gray</td>
+</tr>
+<tr>
+<td>Amarillo mangó</td>
+<td>median of 10 photos</td>
+<td>solid</td>
+</tr>
+<tr>
+<td>Verde quenepa</td>
+<td>median of 3 photos</td>
+<td>indicative</td>
+</tr>
+<tr>
+<td>Azul adoquines</td>
+<td>median of 10 photos</td>
+<td>weak, because the color is nearly gray</td>
+</tr>
+<tr>
+<td>Rojo flamboyán</td>
+<td>median of 15 photos</td>
+<td>solid</td>
+</tr>
+<tr>
+<td>Turquesa mar Caribe</td>
+<td>median of 9 photos</td>
+<td>solid</td>
+</tr>
+</tbody>
+</table></div>
+<p>For a nearly gray color, each camera's white balance decides most of the measured value, so those two are weak.</p>
+<h2>Ad values, from the video</h2>
+<p>These are the primary colors in <code>colores-de-mi-tierra.html</code> and the alternates in <code>colores-de-mi-tierra-reales.html</code>.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>HEX</th>
+<th>RGB</th>
+<th>HSL</th>
+<th>Lab (D50)</th>
+<th>OKLCH</th>
+<th>CMYK SWOP v2</th>
+<th>CMYK GRACoL 2006</th>
+<th>Scene</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frambuesa piragua</td>
+<td><code class="hex"><span class="chip" style="--c:#B43C05"></span>#B43C05</code></td>
+<td>rgb(180, 60, 5)</td>
+<td>hsl(19, 95%, 36%)</td>
+<td>lab(43.4% 48.1 53.8)</td>
+<td>oklch(52.4% 0.165 39.1)</td>
+<td>C20 M88 Y100 K12 (ΔE 5.7)</td>
+<td>C19 M86 Y100 K11 (ΔE 3.6)</td>
+<td>16.65 to 18.90 s</td>
+</tr>
+<tr>
+<td>Blanco coco</td>
+<td><code class="hex"><span class="chip" style="--c:#EBE7E8"></span>#EBE7E8</code></td>
+<td>rgb(235, 231, 232)</td>
+<td>hsl(345, 9%, 91%)</td>
+<td>lab(92.0% 1.5 0.0)</td>
+<td>oklch(93.1% 0.005 358.7)</td>
+<td>C6 M7 Y5 K0 (ΔE 1.0)</td>
+<td>C7 M8 Y7 K0 (ΔE 1.0)</td>
+<td>19.25 to 20.63 s</td>
+</tr>
+<tr>
+<td>Amarillo mangó</td>
+<td><code class="hex"><span class="chip" style="--c:#E7CA5B"></span>#E7CA5B</code></td>
+<td>rgb(231, 202, 91)</td>
+<td>hsl(48, 74%, 63%)</td>
+<td>lab(82.2% 1.2 57.8)</td>
+<td>oklch(84.3% 0.134 94.7)</td>
+<td>C10 M17 Y77 K0 (ΔE 0.3)</td>
+<td>C11 M17 Y73 K0 (ΔE 0.5)</td>
+<td>22.93 to 26.04 s</td>
+</tr>
+<tr>
+<td>Verde quenepa</td>
+<td><code class="hex"><span class="chip" style="--c:#5F9F69"></span>#5F9F69</code></td>
+<td>rgb(95, 159, 105)</td>
+<td>hsl(129, 25%, 50%)</td>
+<td>lab(60.1% -30.3 21.6)</td>
+<td>oklch(64.5% 0.104 148.1)</td>
+<td>C66 M18 Y75 K2 (ΔE 0.6)</td>
+<td>C66 M18 Y71 K2 (ΔE 0.2)</td>
+<td>27.47 to 30.82 s</td>
+</tr>
+<tr>
+<td>Azul adoquines</td>
+<td><code class="hex"><span class="chip" style="--c:#6A7585"></span>#6A7585</code></td>
+<td>rgb(106, 117, 133)</td>
+<td>hsl(216, 11%, 47%)</td>
+<td>lab(48.7% -1.5 -10.3)</td>
+<td>oklch(55.9% 0.028 257.7)</td>
+<td>C62 M49 Y36 K8 (ΔE 0.5)</td>
+<td>C60 M45 Y33 K13 (ΔE 0.9)</td>
+<td>31.18 to 33.39 s</td>
+</tr>
+<tr>
+<td>Rojo flamboyán</td>
+<td><code class="hex"><span class="chip" style="--c:#AB5321"></span>#AB5321</code></td>
+<td>rgb(171, 83, 33)</td>
+<td>hsl(22, 68%, 40%)</td>
+<td>lab(46.1% 34.6 44.8)</td>
+<td>oklch(54.3% 0.131 46.8)</td>
+<td>C24 M75 Y100 K14 (ΔE 0.8)</td>
+<td>C22 M73 Y98 K15 (ΔE 0.4)</td>
+<td>34.15 to 35.45 s</td>
+</tr>
+<tr>
+<td>Turquesa mar Caribe</td>
+<td><code class="hex"><span class="chip" style="--c:#439BB6"></span>#439BB6</code></td>
+<td>rgb(67, 155, 182)</td>
+<td>hsl(194, 46%, 49%)</td>
+<td>lab(59.5% -21.0 -22.4)</td>
+<td>oklch(64.7% 0.092 221.3)</td>
+<td>C71 M25 Y22 K0 (ΔE 0.3)</td>
+<td>C71 M22 Y20 K1 (ΔE 0.4)</td>
+<td>35.85 to 40.00 s</td>
+</tr>
+</tbody>
+</table></div>
+<h2>How the ad values were measured</h2>
+<ul>
+<li><strong>Source.</strong> The .mp4 file (H.264, 1920×1440, BT.709, limited range, 61 s). The .webm file (VP9) went through the same steps and agrees within ΔE 0.03 for every color. Screenshots of each scene served only to find the scenes, because they pass through the player's color management and JPEG compression.</li>
+<li><strong>Decoding.</strong> Raw Y'CbCr frames were converted to R'G'B' in floating point with the BT.709 matrix. The result matches ffmpeg's own conversion within 0.5 of a code value. BT.709 has the same primaries and white point as sRGB, so the decoded values are sRGB values.</li>
+<li><strong>Scenes.</strong> ffmpeg scene detection found the cuts. About 5 frames were dropped at each cut, and every second frame in between was used. Turquesa uses the two splash shots, from 35.85 to 40.00 s.</li>
+<li><strong>Paint pixels.</strong> Pixels were kept when their hue and chroma matched the paint, or by lightness alone for the white. The mask was shrunk so edges that blend into the background drop out, and clipped highlights were removed.</li>
+<li><strong>The value.</strong> Only the 60th to 95th percentile of lightness was kept. That keeps the lit side of the paint and drops the shadow side and the gloss highlights. The value is the median of what remains, in CIELAB.</li>
+</ul>
+<h2>How the real-thing values were measured</h2>
+<ul>
+<li><strong>Official sources.</strong> None publishes a measured color for these subjects. The Floral Reflectance Database has no entry for the flamboyán tree, no Royal Horticultural Society chart code turned up, and the pigment studies measure extracts and drinks, not petals. A 2026 paper in Food and Humanity reports an a* of about 14 for "fresh flower". That number came only from a search summary, the paper is paywalled, and the value is far too low for scarlet petals, so it was not used. The Harris Paints homepage mentions no flamboyán color.</li>
+<li><strong>Photos.</strong> Every measured photo comes from Wikimedia Commons. Each one has camera EXIF data, was taken between 2006 and 2021, and comes from a different photographer. The date and camera rules make AI-generated images unlikely, and one photo per photographer keeps any single camera from dominating.</li>
+<li><strong>Subject rules.</strong> Each subject was defined before the search, and photos that did not fit the definition were dropped. For the turquesa, that meant dropping deep water and sky reflected on wet sand.</li>
+<li><strong>Measurement.</strong> A hand-drawn box marks the subject in each photo. Inside it, the same hue and chroma mask, lit band and Lab median as the video apply. The primary value is the median across photos.</li>
+<li><strong>Check on the flamboyán.</strong> The 8 photos with the fewest blown-out pixels give a value within ΔE 2.5 of the full set of 15.</li>
+</ul>
+<h2>Findings</h2>
+<h3>The ad against the real things</h3>
+<p>A color counts as consistent when the ad's hue and chroma fall inside the range the photos span, and at the edge when it misses by 2 or less. Lightness is left out, because in photos it mostly follows the exposure.</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Ad hue and chroma</th>
+<th>Photos, hue and chroma</th>
+<th>ΔE, ad to primary</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Frambuesa piragua</td>
+<td>48°, 72</td>
+<td>42°, 74 (1 photo)</td>
+<td>6.3</td>
+<td>too few photos</td>
+</tr>
+<tr>
+<td>Blanco coco</td>
+<td>chroma 2</td>
+<td>chroma 1 to 14</td>
+<td>3.8</td>
+<td>consistent, weak</td>
+</tr>
+<tr>
+<td>Amarillo mangó</td>
+<td>89°, 58</td>
+<td>73° to 87°, 57 to 79</td>
+<td>10.3</td>
+<td>at the edge, a little greener and duller</td>
+</tr>
+<tr>
+<td>Verde quenepa</td>
+<td>145°, 37</td>
+<td>109° to 120°, 35 to 56</td>
+<td>13.0</td>
+<td>shifted, green where the fruit is yellow-green</td>
+</tr>
+<tr>
+<td>Azul adoquines</td>
+<td>chroma 10</td>
+<td>chroma 4 to 15</td>
+<td>2.8</td>
+<td>consistent, weak</td>
+</tr>
+<tr>
+<td>Rojo flamboyán</td>
+<td>52°, 57</td>
+<td>33° to 42°, 62 to 96</td>
+<td>11.1</td>
+<td>shifted, orange where the flower is red, and duller</td>
+</tr>
+<tr>
+<td>Turquesa mar Caribe</td>
+<td>227°, 31</td>
+<td>181° to 231°, 18 to 30</td>
+<td>9.7</td>
+<td>at the edge, bluer and a bit more saturated than the water</td>
+</tr>
+</tbody>
+</table></div>
+<p>Amarillo mangó has a large ΔE with only an "at the edge" verdict because most of its gap is lightness. The ad is lighter than every mango photo.</p>
+<h3>A common hue lean</h3>
+<ul>
+<li>The video stores color as brightness plus a two-axis color plane (Cb and Cr). Measured in that plane, every colorful ad color is rotated the same direction from its real thing. The rotation is 5.9° for amarillo mangó, 14.6° for turquesa and 18.9° for rojo flamboyán. Frambuesa sits at 10.2° from its single photo, and verde quenepa is the outlier at 43.5° from 3 photos.</li>
+<li>The three colors with solid photo sets average 13.2°, give or take 5.4°.</li>
+<li>Saturation and brightness have no common factor. In the ad, rojo flamboyán's saturation is 0.66 of the flower's, mango's is 0.76 of the fruit's, and turquesa's is 1.63 times the water's. Only the hue rotation carries from one color to another.</li>
+<li>Each of the three was tested with the rotation fitted from the other two. Removing that lean moves every one toward its photos.</li>
+</ul>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Color</th>
+<th>Rotation from the other two</th>
+<th>Ad hue, before to after</th>
+<th>Photos</th>
+<th>ΔE, before to after</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Amarillo mangó</td>
+<td>16.8°</td>
+<td>88.8° to 72.7°</td>
+<td>79.6° (range 73° to 87°)</td>
+<td>10.3 to 9.8</td>
+</tr>
+<tr>
+<td>Rojo flamboyán</td>
+<td>10.3°</td>
+<td>52.4° to 43.2°</td>
+<td>39.2° (range 33° to 42°)</td>
+<td>11.1 to 6.9</td>
+</tr>
+<tr>
+<td>Turquesa mar Caribe</td>
+<td>12.4°</td>
+<td>226.8° to 201.2°</td>
+<td>197.7° (range 181° to 231°)</td>
+<td>9.7 to 4.6</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Mango overcorrects slightly, to just below its photo range. Its ΔE barely moves because most of its gap is lightness.</li>
+<li>The lean is shared across colors, not specific to reds. Rojo flamboyán alone leans 18.9°, and removing that much from frambuesa overshoots.</li>
+<li>The ad's whites and blacks read neutral. The white cone, the white bricks, the white shape under the yellow pour and the black backgrounds all stay within 4 of zero on a<em> and b</em>. So the video has no overall color cast.</li>
+<li>A tint error in the 1991 tape transfer would produce this pattern, but the data cannot prove it. The factor was measured against the real things, not the original paints, so it mixes transfer error with how the paints were designed.</li>
+</ul>
+<h3>Frambuesa piragua estimate</h3>
+<ul>
+<li>Wikimedia Commons has only one usable piragua photo, and its flavor is not identified. So frambuesa's primary value is an estimate instead of a photo median.</li>
+<li>The ad value <code class="hex"><span class="chip" style="--c:#B43C05"></span>#B43C05</code> was rotated back by the shared 13.2° in the video's color plane. Only the hue changed. Saturation and brightness stayed as the ad has them.</li>
+<li>The result is <code class="hex"><span class="chip" style="--c:#C03621"></span>#C03621</code>. The one piragua photo, <code class="hex"><span class="chip" style="--c:#C73B1E"></span>#C73B1E</code>, sits ΔE 2.5 away. That photo played no part in fitting the factor, so the match is an independent check. The unadjusted ad value sits ΔE 5.8 from the photo.</li>
+<li>Using the ±5.4° spread gives a range from <code class="hex"><span class="chip" style="--c:#BC3815"></span>#BC3815</code> (7.7°, ΔE 2.8 from the photo) to <code class="hex"><span class="chip" style="--c:#C4332E"></span>#C4332E</code> (18.6°, ΔE 5.4).</li>
+<li>Using the flamboyán's own 18.9° gives <code class="hex"><span class="chip" style="--c:#C4332F"></span>#C4332F</code>, ΔE 5.6 from the photo. That overshoot is why the estimate uses the shared factor.</li>
+</ul>
+<h2>Which code to trust</h2>
+<ol>
+<li><strong>HEX and RGB.</strong> The master value for every color. The photos and the video are both sRGB, so HEX is the measured value rounded to 8 bits.</li>
+<li><strong>HSL and HSB.</strong> The same RGB numbers expressed as hue, saturation and lightness. Nothing is added or lost beyond rounding.</li>
+<li><strong>Lab, LCH and OKLCH.</strong> Exact conversions from sRGB into device-independent spaces. Lab and LCH use D50 with Bradford adaptation, the same as Photoshop and CSS. Give the Lab value to a paint store, since color-matching spectrophotometers read in Lab.</li>
+<li><strong>CMYK.</strong> The least accurate code, because it depends on ink, paper and press. Both pages use the Adobe SWOP v2 and GRACoL 2006 profiles with relative colorimetric intent and black point compensation. The ΔE next to each CMYK value shows how far a round trip through the profile lands from the screen color. Below 2 is hard to see. The pages also list the naive CMYK formula, which is not color-managed.</li>
+</ol>
+<p>Most colors print within ΔE 1.1. The exceptions are the ad's frambuesa (ΔE 5.7 on SWOP, 3.6 on GRACoL) and the flamboyán flower red on SWOP (ΔE 2.2, and 0.2 on GRACoL).</p>
+<h2>Limits</h2>
+<ul>
+<li>Photos are not lab measurements. Each camera sets its own white balance and exposure, so each primary is a median across photographers, and the cards show the spread photo by photo.</li>
+<li>Blanco coco and azul adoquines are nearly gray, so white balance decides most of their values.</li>
+<li>Verde quenepa rests on 3 photographers, and frambuesa piragua on an estimate checked against 1 photo.</li>
+<li>The ad went from 1991 film to tape to a YouTube encode, and each step can shift color.</li>
+<li>The paints were never meant to be exact copies of the things they are named after, so a gap between the ad and the real thing is not necessarily an error.</li>
+</ul>
+<h2>Sources</h2>
+<ul>
+<li>Video: <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=6O6Xl9RFoJs">Harris Paints - Los Colores de mi Tierra (1991)</a> on YouTube. The measurements used a downloaded copy in .mp4 and .webm.</li>
+<li>Song lyrics and credits: <a target="_blank" rel="noopener" href="https://www.speakinglatino.com/a-commercial-from-puerto-rico-will-teach-you-the-colors-in-spanish/">Speaking Latino</a></li>
+<li>Photos: <a target="_blank" rel="noopener" href="https://commons.wikimedia.org/">Wikimedia Commons</a>. Every photo is linked, with photographer, year, camera and license, on its card in both pages.</li>
+<li><a target="_blank" rel="noopener" href="http://www.reflectance.co.uk/">FReD, Floral Reflectance Database</a></li>
+<li><a target="_blank" rel="noopener" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10096959/">Delonix regia pigment study (PMC10096959)</a></li>
+<li><a target="_blank" rel="noopener" href="https://doi.org/10.1016/j.foohum.2026.101133">Food and Humanity 2026, DOI 10.1016/j.foohum.2026.101133</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.harrispaints.com/en">Harris Paints</a></li>
+<li>CMYK profiles: Adobe U.S. Web Coated (SWOP) v2 and Coated GRACoL 2006, from Adobe's standard profile set.</li>
+</ul>
+<p>The measurement scripts are not part of this repository. The HTML pages hold every final value.</p></main>
+  <footer>This page is generated from summary.md.</footer>
+</div>
+</body>
+</html>
