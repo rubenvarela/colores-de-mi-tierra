@@ -2,12 +2,12 @@
 
 In 1991, Harris Paints ran an ad before the movies in Puerto Rico with a song that names seven colors of the island. This project gives each color a full set of codes, measured from photos of the real thing it is named after, and compares it with the paint as the ad showed it.
 
-The site is published at <https://rubenvarela.github.io/colores-de-mi-tierra/>.
+The site is published at <https://rubenvarela.github.io/los-colores-de-mi-tierra/>.
 
 ## Start here
 
-- **[The colors](https://rubenvarela.github.io/colores-de-mi-tierra/colores-de-mi-tierra-reales.html).** Each color measured from photos of the real thing, with HEX, RGB, HSL, Lab, OKLCH and CMYK codes. The ad's own value is kept on each card as an alternate.
-- **[As the ad recorded them](https://rubenvarela.github.io/colores-de-mi-tierra/colores-de-mi-tierra.html).** The same seven colors sampled from the ad's video frames, with the frame each one came from and how it compares with the real thing.
+- **[The colors](https://rubenvarela.github.io/los-colores-de-mi-tierra/colores-de-mi-tierra-reales.html).** Each color measured from photos of the real thing, with HEX, RGB, HSL, Lab, OKLCH and CMYK codes. The ad's own value is kept on each card as an alternate.
+- **[As the ad recorded them](https://rubenvarela.github.io/los-colores-de-mi-tierra/colores-de-mi-tierra.html).** The same seven colors sampled from the ad's video frames, with the frame each one came from and how it compares with the real thing.
 - **[How it was built](summary.md).** Sources, methods, findings and limits, with every final value in one document.
 
 ## The seven colors
